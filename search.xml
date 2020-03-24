@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>test1</title>
-    <url>/blog/2020/03/24/test1/</url>
+    <url>/2020/03/24/test1/</url>
     <content><![CDATA[<p>你好嗎, 再見!</p>
 ]]></content>
       <categories>
@@ -15,7 +15,7 @@
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/blog/2020/03/21/hello-world/</url>
+    <url>/2020/03/21/hello-world/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/FgSurewin/pictures/master/zebra.jpg" alt=""><br>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <a id="more"></a>
 
