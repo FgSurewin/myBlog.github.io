@@ -5,6 +5,8 @@
     <url>/myBlog.github.io/2020/03/30/Inheritance/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Inheritance.png" alt=""></p>
 <h2 id="What-is-inheritance"><a href="#What-is-inheritance" class="headerlink" title="What is inheritance?"></a>What is inheritance?</h2><p><strong>Inheritance allows a new class to extends an existing class. The new class inherits the members of the class it extends</strong></p>
+<a id="more"></a>
+
 <h3 id="Inheritance-and-the-“Is-a”-Relationship"><a href="#Inheritance-and-the-“Is-a”-Relationship" class="headerlink" title="Inheritance and the “Is a” Relationship"></a>Inheritance and the “Is a” Relationship</h3><ul>
 <li>When one object is a specialized version of another object, there is an <strong>“Is a”</strong> relationship between them. (For example, a grasshopper is an insect).</li>
 <li>When an <strong>“Is a”</strong> relationship exists between objects, it means that the specialized object has all of the characteristics of the general object, plus additional characteristics that make it special.</li>
