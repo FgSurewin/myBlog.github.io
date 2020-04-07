@@ -1,6 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git</title>
+    <url>/myBlog.github.io/2020/04/07/Git/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/night.png" alt=""></p>
+<p>鑒於 Git 的指令太多, 因此寫一個個人總結作為一次學習過程.</p>
+<p><a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">官方資料</a></p>
+<a id="more"></a>
+
+<h2 id="工作區、暫存區和版本庫"><a href="#工作區、暫存區和版本庫" class="headerlink" title="工作區、暫存區和版本庫"></a>工作區、暫存區和版本庫</h2><p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/1_9qX9F9MGsWKfcmgTOR9BPw.png" alt=""></p>
+<p>事實上, 圖中已經顯示絕大部分常用的 Git 指令.</p>
+<ul>
+<li><strong>工作區 (Workspace)</strong></li>
+<li><strong>暫存區 (Index / Stage)</strong></li>
+<li><strong>版本庫 (Repository)</strong></li>
+</ul>
+<blockquote>
+<p>文件經過初始化后會形成一個隱藏的.git 文件, 以上所有的區域都會存儲于.git 文件之中</p>
+</blockquote>
+<h3 id="基本工作流程"><a href="#基本工作流程" class="headerlink" title="基本工作流程"></a>基本工作流程</h3><ol>
+<li>在 GitHub 上創建 repo 并 clone URL 到本地目錄</li>
+<li>在克隆的資源上添加或者修改代碼</li>
+<li>使用 fetch/pull 更新資源</li>
+<li>如果想要提交修改的文件到 GitHub 可以使用 push</li>
+<li>在 push 之前應該檢查并添加至版本庫中</li>
+</ol>
+<hr>
+<h2 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h2><h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><h4 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置個人的用戶名稱和Email</span></span><br><span class="line">$ git config --global user.name <span class="string">"FgSurewin"</span></span><br><span class="line">$ git config --global user.email FgSurewin@gmail.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置信息</span></span><br><span class="line">$ git config --list</span><br></pre></td></tr></table></figure>
+
+<h4 id="項目初始化"><a href="#項目初始化" class="headerlink" title="項目初始化"></a>項目初始化</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地文件的初始化</span></span><br><span class="line">$ git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆已創建的GitHub項目</span></span><br><span class="line">$ git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本快照-Snapshot"><a href="#基本快照-Snapshot" class="headerlink" title="基本快照 (Snapshot)"></a>基本快照 (Snapshot)</h4><p>我們將每一個將要存儲的版本都稱為快照, 使用 add 指令可以將代碼存入暫存區. 而後我們再使用 commit 來實現版本號的存儲. 而 Git 的最大作用便是將每一個版本號都能存儲起來, 方便我們對版本的控制.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加指定文件至暫存區</span></span><br><span class="line">$ git add [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加當前目錄所有文件至暫存區</span></span><br><span class="line">$ git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交暫存區的文件到倉庫區</span></span><br><span class="line">$ git commit -m <span class="string">"message"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用一次新的commit來替代上一次提交</span></span><br><span class="line"><span class="comment"># 如果代碼沒有任何新變化, 則用來改寫上一次commit的提交信息</span></span><br><span class="line">$ git commit -amend -m <span class="string">"message"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交時顯示所有diff信息</span></span><br><span class="line">$ git commit -v</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看信息"><a href="#查看信息" class="headerlink" title="查看信息"></a>查看信息</h4><p>Git 中的查看信息功能主要分成以下部分:</p>
+<ul>
+<li>每次更改動作發生后, 使用 git status 來查看變更的文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 當我們添加文件至暫存區且還沒commit至倉庫區時</span></span><br><span class="line">$ git add .</span><br><span class="line">$ git status -s</span><br><span class="line">A  README</span><br><span class="line">M  hello.php</span><br><span class="line"><span class="comment"># A表示add, Git會提醒我們暫存區已經獲取到文件但尚未commit至倉庫區. 如果我們已經commit至倉庫區, 那麼我們會看不到任何信息, 因為已經順利完成一次"快照"</span></span><br><span class="line"><span class="comment"># M表示modify</span></span><br><span class="line"><span class="comment"># --------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -s是short的意思(推薦使用), 如果沒有-s則顯示完整信息</span></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">Initial commit</span><br><span class="line"></span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use <span class="string">"git rm --cached &lt;file&gt;..."</span> to unstage)</span><br><span class="line"></span><br><span class="line">    new file:   README</span><br><span class="line">    new file:   hello.php</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 git diff 來查看具體的變化信息</li>
+</ul>
+<p>git status 是用於查看文件的變化情況, 但是不知道具體每個文件的內容的具體變化情況. 而 diff 則是用於查看每個文件的具體變化情況</p>
+<p>具體的使用方法是: 當我們修改了工作區的代碼并使用 diff 時, Git 會將我們的文件內容與暫存區的文件內容進行比對, 然後顯示具體的變化.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 尚未緩存的改動</span></span><br><span class="line"><span class="comment"># 查看工作區和暫存區的差異</span></span><br><span class="line">$ git diff</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已經暫存的文件的改動</span></span><br><span class="line"><span class="comment"># 查看暫存區和版本庫的差異</span></span><br><span class="line">$ git diff --cached</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有未緩存的文件的改動</span></span><br><span class="line"><span class="comment"># 查看工作區和版本庫的差異</span></span><br><span class="line">$ git diff HEAD</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>HEAD 的理解: 在 Git 中, 它是一個指針, 指向當前所在的本地分支(想象為當前分支的別名)</p>
+</blockquote>
+<ul>
+<li>查看當前分支的執行歷史</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 顯示當前分支的版本歷史</span></span><br><span class="line">$ git <span class="built_in">log</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 顯示方式為單行</span></span><br><span class="line">$ git <span class="built_in">log</span> --oneline</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以圖像的方式顯示</span></span><br><span class="line">$ git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看所有的 git 指令歷史</li>
+</ul>
+<p>當我們想撤回版本的時候, 我們可能需要知道每一次 commit 的哈希碼.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有git動作歷史</span></span><br><span class="line">$ git reflog</span><br></pre></td></tr></table></figure>
+
+<p>當我撤回版本之後, 我們可能會丟失屬於未來的版本.如果我後悔了, 想回到”未來”, 但是 git log 已經無法再查看到未來的 commit 的哈希碼, 這時候我們可以用 git reflog 來查看我們所有的指令歷史來尋找對應的哈希碼.</p>
+<blockquote>
+<p>理論上, 所有存進 git 中的版本都能自由選擇與撤回</p>
+</blockquote>
+<h4 id="撤回文件"><a href="#撤回文件" class="headerlink" title="撤回文件"></a>撤回文件</h4><p>Git 中的撤回文件可以理解成保存指令的反向指令.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 工作區 ==&gt; 暫存區</span></span><br><span class="line">$ git add [flie]</span><br><span class="line"><span class="comment"># 暫存區 ==&gt; 工作區</span></span><br><span class="line">$ git checkout [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暫存區 ==&gt; 版本庫(倉庫區)</span></span><br><span class="line">$ git commit -m <span class="string">"message"</span></span><br><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區</span></span><br><span class="line">$ git reset [指定版本的哈希碼]</span><br><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區 + 工作區</span></span><br><span class="line">$ git reset --hard [指定版本的哈希碼]</span><br></pre></td></tr></table></figure>
+
+<p>因為 HEAD 是版本庫的游標關係, 我們還能以 HEAD 作為版本號</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區</span></span><br><span class="line">$ git reset HEAD^</span><br><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區 + 工作區</span></span><br><span class="line">$ git reset --hard HEAD^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其中^表示上一個版本</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="刪除文件"><a href="#刪除文件" class="headerlink" title="刪除文件"></a>刪除文件</h4><p>當我們只是刪除工作區的文件時, 我們只需要簡單實用 Linux 命令行即可</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ rm [file]</span><br></pre></td></tr></table></figure>
+
+<p>當我們想要刪除已經存儲在版本庫中的文件的時候, 我們需要使用 git 的命令行.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 刪除版本庫文件</span></span><br><span class="line">$ git rm [file]</span><br><span class="line"><span class="comment"># 提交commit</span></span><br><span class="line">$ git commit -m <span class="string">"message"</span></span><br></pre></td></tr></table></figure>
+
+<p>我們看到, 刪除文件和添加文件一樣是需要 commit 的. 這是一個合理的操作方式, 因為我們明白 Git 的運行方式是對於版本庫的管理. 每一次的 commit 都會是一個”快照”, 一個新的版本. 而所謂的刪除版本庫中的文件也不是真正意義上的刪除文件, 只是<strong>建立了一個沒有這個文件的版本</strong>. 當我需要撤回文件的時候就可以根據實際需求而返回到相應的版本.</p>
+<h4 id="分支使用"><a href="#分支使用" class="headerlink" title="分支使用"></a>分支使用</h4><h5 id="分支原理"><a href="#分支原理" class="headerlink" title="分支原理"></a>分支原理</h5><p>創建名為 testing 的指針</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git branch testing</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/head-to-master.png" alt=""></p>
+<p>事實上每一個分支都是一個移動的指針 ==&gt; 指向不同版本號. 而切換分支就是在移動 HEAD 這個指針的位置.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切換至分支testing</span></span><br><span class="line">$ git checkout testing</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/head-to-testing.png" alt=""></p>
+<p>之後分支的每一次 commit 都只是指針不斷的變化</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/advance-testing.png" alt=""></p>
+<p>直到你覺得時機成熟, 可以合併分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 合併分支 -- fast-forward</span></span><br><span class="line">$ git merge testing</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合併分支 -- non-fast-forward</span></span><br><span class="line">$ git merge --no-ff -m <span class="string">"message"</span> testing</span><br></pre></td></tr></table></figure>
+
+<p><strong>前者 fast-forward 模式</strong>下, 只是單純的將 master 的指針移動至 testing 的最新版本庫, 兩者的移動軌跡會重合, 導致你無法看清分支的軌跡.</p>
+<p>後者則是能保存好分支的軌跡</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/basic-merging-2.png" alt=""></p>
+<h5 id="解決衝突"><a href="#解決衝突" class="headerlink" title="解決衝突"></a>解決衝突</h5><p><strong>有時候合併操作不會如此順利. 如果你在兩個不同的分支中, 對同一個文件的同一個部分進行了不同的修改, Git 就沒法乾淨的合併它們.</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/advance-master.png" alt=""></p>
+<p>假設 master 與 testing 指向的這兩個不同的版本號都是修改同一個文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 同時修改index.html,則會出現以下錯誤</span></span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html</span><br><span class="line">&lt;div id=<span class="string">"footer"</span>&gt;contact : email.support@github.com&lt;/div&gt;</span><br><span class="line">=======</span><br><span class="line">&lt;div id=<span class="string">"footer"</span>&gt;</span><br><span class="line"> please contact us at support@github.com</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; iss53:index.html</span><br></pre></td></tr></table></figure>
+
+<p>解決衝突的方式查看具體不同的內容, 編輯者自行修改所需的內容并 add 到暫存區, 然後 commit. 這樣我們就能有一個新的版本號且內容是編輯者所需的.</p>
+<h5 id="多人協作"><a href="#多人協作" class="headerlink" title="多人協作"></a>多人協作</h5><p>(1) 分支管理</p>
+<p>master 是用於版本的最終更新的, 所以往往會滯後.</p>
+<p>develop 是用于開發, 每當一個功能完善后的版本出現, 便會與 master 合併發佈新的版本.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/0.png" alt=""></p>
+<p>實際寫作可參考: <a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">A successful Git branching model</a></p>
+<p>(2) 避免衝突</p>
+<p>在團隊工作中, 多人協作很容易會遇到一些衝突的問題發生. 以 GitHub 為例, 我們會發現后 push 的人為了避免衝突, 往往需要先 pull 更新前者版本的代碼, 然後再 push 來避免衝突.</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>對於操作 Git 而言, 關鍵是明白三個區域之間的聯繫. 每個指令與這三個區域的關係.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 工作區 ==&gt; 暫存區</span></span><br><span class="line">$ git add [flie]</span><br><span class="line"><span class="comment"># 暫存區 ==&gt; 工作區</span></span><br><span class="line">$ git checkout [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暫存區 ==&gt; 版本庫(倉庫區)</span></span><br><span class="line">$ git commit -m <span class="string">"message"</span></span><br><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區</span></span><br><span class="line">$ git reset [指定版本的哈希碼]</span><br><span class="line"><span class="comment"># 版本庫(倉庫區) ==&gt; 暫存區 + 工作區</span></span><br><span class="line">$ git reset --hard [指定版本的哈希碼]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件狀態(是否修改/創建/刪除)</span></span><br><span class="line">$ git status</span><br><span class="line">$ git status -s</span><br><span class="line"><span class="comment"># 查看文件內容差異: 工作區 vs 暫存區</span></span><br><span class="line">$ git diff</span><br><span class="line"><span class="comment"># 查看文件內容差異: 暫存區 vs 倉庫區</span></span><br><span class="line">$ git diff --cached</span><br><span class="line"><span class="comment"># 查看文件內容差異: 工作區 vs 倉庫區</span></span><br><span class="line">$ git diff HEAD</span><br><span class="line"></span><br><span class="line"><span class="comment"># 刪除工作區中的文件</span></span><br><span class="line">$ rm [file]</span><br><span class="line"><span class="comment"># 刪除倉庫區中的文件</span></span><br><span class="line">$ git rm [file]</span><br><span class="line">$ git commit -m <span class="string">"message"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分支</span></span><br><span class="line">$ git branch</span><br><span class="line"><span class="comment"># 建立分支</span></span><br><span class="line">$ git branch [name]</span><br><span class="line"><span class="comment"># 刪除分支</span></span><br><span class="line">$ git branch -d [name]</span><br><span class="line"><span class="comment"># 切換分支</span></span><br><span class="line">$ git checkout [branchName]</span><br><span class="line">$ git switch [branchName]</span><br><span class="line"><span class="comment"># 快速建立分支+切換到該分支</span></span><br><span class="line">$ git checkout -b [branchName]</span><br><span class="line">$ git switch -c [branchName]</span><br><span class="line"><span class="comment"># 合併分支 - fast-forward</span></span><br><span class="line">$ git merge [branchName]</span><br><span class="line"><span class="comment"># 合併分支 - non-fast-forward</span></span><br><span class="line">$ git merge --no-ff -m <span class="string">"message"</span> [branchName]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="遠程操作"><a href="#遠程操作" class="headerlink" title="遠程操作"></a>遠程操作</h2><h3 id="基本操作-1"><a href="#基本操作-1" class="headerlink" title="基本操作"></a>基本操作</h3><h4 id="創建遠程倉庫"><a href="#創建遠程倉庫" class="headerlink" title="創建遠程倉庫"></a>創建遠程倉庫</h4><p>常見的使用流程:</p>
+<p>GitHub 上發現項目 ==&gt; fork(保存至自己的倉庫中) ==&gt; clone URL 至本地工作區</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># clone的方法很多種</span></span><br><span class="line"><span class="comment"># 常見是直接在GitHub的項目中點擊複製URL</span></span><br><span class="line">$ git <span class="built_in">clone</span> [URL]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看遠程倉庫</span></span><br><span class="line">$ git remote</span><br><span class="line">origin</span><br><span class="line"><span class="comment"># 添加遠程倉庫</span></span><br><span class="line">$ git remote add pb https://github.com/paulboone/ticgit</span><br><span class="line"><span class="comment"># 查看詳細的遠程倉庫信息</span></span><br><span class="line">$ git remote -v</span><br><span class="line">origin	https://github.com/schacon/ticgit (fetch)</span><br><span class="line">origin	https://github.com/schacon/ticgit (push)</span><br><span class="line">pb	https://github.com/paulboone/ticgit (fetch)</span><br><span class="line">pb	https://github.com/paulboone/ticgit (push)</span><br><span class="line"><span class="comment"># 顯示某個遠程倉庫的信息</span></span><br><span class="line">$ git remote show [remote]</span><br></pre></td></tr></table></figure>
+
+<h4 id="更新本地工作區"><a href="#更新本地工作區" class="headerlink" title="更新本地工作區"></a>更新本地工作區</h4><blockquote>
+<p>原項目的倉庫 —–&gt; 工作區</p>
+</blockquote>
+<p>在使用 git 進行更新本地工作區的時候, 我們會使用 fetch 和 pull.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用fetch</span></span><br><span class="line">$ git fetch [remote] [branch]</span><br><span class="line">$ git merge [remote]/[branch]</span><br><span class="line"><span class="comment"># 實例</span></span><br><span class="line">$ git fetch origin</span><br><span class="line">$ git fetch origin/master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用pull</span></span><br><span class="line">$ git pull [remote] [branch]</span><br></pre></td></tr></table></figure>
+
+<p>事實上, 使用 fetch 和 pull 進行的更新, 不是直接在源代碼的層面上直接更新. 不管是 fetch 還是 pull, 其實都是將遠程倉庫的最新版本(HEAD)內容下載至本地工作區(所有分支, 除非特別指定).</p>
+<p>具體路徑是:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># .git =&gt; refs =&gt; remotes =&gt; origin(默認) =&gt; [分支內容]</span></span><br><span class="line"><span class="comment"># fetch的工作是單純的下載分支, 而需要自行合併所需的分支內容</span></span><br><span class="line">$ git fetch origin/master</span><br><span class="line"><span class="comment"># 則是表明需要合併遠程倉庫中master分支的內容到當前分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pull指令則更為便捷 =&gt; fetch + merge</span></span><br><span class="line"><span class="comment"># 由於本地工作區的分支名稱與遠程倉庫的分支名稱是一一對應</span></span><br><span class="line"><span class="comment"># 默認情況下是會直接合併到當前分支</span></span><br><span class="line">$ git pull</span><br><span class="line"><span class="comment"># 以上代碼等同於</span></span><br><span class="line">$ git fetch [remote]</span><br><span class="line">$ git merge [remote]/[current_branch]</span><br></pre></td></tr></table></figure>
+
+<p><strong>fetch</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下載所有分支內容</span></span><br><span class="line">$ git fetch origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下載指定分支 + 合併</span></span><br><span class="line">$ git fetch origin master</span><br><span class="line">$ git merge origin/master</span><br></pre></td></tr></table></figure>
+
+<p><strong>pull</strong>:</p>
+<p>簡單而言, pull = fetch + merge</p>
+<p>如果你正處於 master 分支, 並且運行 git pull, 就會抓取所有的遠程引用, 然後將遠程 master 分支合併到本地 master 分支. 它也會列出拉取到的所有遠程引用.</p>
+<h4 id="推送代碼至遠程倉庫"><a href="#推送代碼至遠程倉庫" class="headerlink" title="推送代碼至遠程倉庫"></a>推送代碼至遠程倉庫</h4><p>工作區 ==&gt; 自己的遠程倉庫 —–&gt; 原項目的倉庫</p>
+<p>當我 clone 別人的項目時, 我們是沒有權利去直接推送至元項目的倉庫的, 我們只能推送至我們自己的倉庫, 這就是為什麼我們常常需要 fork 別人的項目. (如果你成為該項目的 contributor, 或者原項目主人給予權限則可以直接關聯這個遠程倉庫進行直接推送)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推送至遠程倉庫</span></span><br><span class="line"><span class="comment"># 默認的遠程倉庫是origin</span></span><br><span class="line"><span class="comment"># push的作用是將本地[branch]推送至遠程倉庫的[branch]</span></span><br><span class="line">$ git push [remote] [branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------------------------------</span></span><br><span class="line">$ git push origin master</span><br><span class="line"><span class="comment"># 以上命令行會將本地的master分支內容推送至遠程倉庫的master分支中</span></span><br><span class="line"><span class="comment"># 即使你切換到其他分支, 依然只是推送指令之中[branch]的內容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送本地所有分支至遠程倉庫</span></span><br><span class="line">$ git push [remote] --all</span><br></pre></td></tr></table></figure>
+
+<p>如果我們需要將代碼推送至原項目 GitHub 倉庫中, 我們需要 pull request.</p>
+<hr>
+<h2 id="常用的-Linux-命令"><a href="#常用的-Linux-命令" class="headerlink" title="常用的 Linux 命令"></a>常用的 Linux 命令</h2><h4 id="創建目錄-文件夾"><a href="#創建目錄-文件夾" class="headerlink" title="創建目錄/文件夾"></a>創建目錄/文件夾</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 創建目錄</span></span><br><span class="line">mkdir [dirName]</span><br><span class="line"><span class="comment"># 創建帶有子目錄的目錄</span></span><br><span class="line">mkdir -p fater/son</span><br><span class="line"></span><br><span class="line"><span class="comment"># 刪除目錄</span></span><br><span class="line">rmdir [dirName]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切換目錄</span></span><br><span class="line"><span class="built_in">cd</span> [dirName]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 顯示目錄結構</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<h4 id="創建文件"><a href="#創建文件" class="headerlink" title="創建文件"></a>創建文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 創建文件</span></span><br><span class="line">touch test.md</span><br><span class="line">touch index.js</span><br></pre></td></tr></table></figure>
+
+<h4 id="刪除文件-1"><a href="#刪除文件-1" class="headerlink" title="刪除文件"></a>刪除文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 刪除文件</span></span><br><span class="line">rm [file]</span><br></pre></td></tr></table></figure>
+
+<h4 id="Vim-的基本操作指令"><a href="#Vim-的基本操作指令" class="headerlink" title="Vim 的基本操作指令"></a>Vim 的基本操作指令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用vim來編輯代碼</span></span><br><span class="line">vim [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 輸入模式</span></span><br><span class="line"><span class="comment"># 進入vim后 ==&gt; 輸入i</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line"><span class="comment"># ESC ==&gt; 輸入:wq</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LaTeX</title>
     <url>/myBlog.github.io/2020/04/02/LaTeX/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/LaTeX.png" alt=""></p>
