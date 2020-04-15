@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myBlog.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myBlog.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myBlog.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myBlog.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myBlog.github.io/css/main.css">
+
+
+<link rel="stylesheet" href="/myBlog.github.io/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/myBlog.github.io/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myBlog.github.io/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fgsurewin.github.io","root":"/myBlog.github.io/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Handling Exceptions An exception is an object that is generated as the result of an error or an unexpected event.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exception">
+<meta property="og:url" content="https://fgsurewin.github.io/myBlog.github.io/2020/04/15/Exception/index.html">
+<meta property="og:site_name" content="清茶、淡飯">
+<meta property="og:description" content="Handling Exceptions An exception is an object that is generated as the result of an error or an unexpected event.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Exception.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414231539.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234002.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234116.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415002149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014101.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014200.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014450.png">
+<meta property="article:published_time" content="2020-04-15T14:48:09.000Z">
+<meta property="article:modified_time" content="2020-04-15T14:51:04.158Z">
+<meta property="article:author" content="FgSurewin">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Exception.png">
+
+<link rel="canonical" href="https://fgsurewin.github.io/myBlog.github.io/2020/04/15/Exception/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Exception | 清茶、淡飯</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myBlog.github.io/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">清茶、淡飯</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">To be a better man</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myBlog.github.io/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myBlog.github.io/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/myBlog.github.io/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myBlog.github.io/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fgsurewin.github.io/myBlog.github.io/2020/04/15/Exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myBlog.github.io/images/center.jpg">
+      <meta itemprop="name" content="FgSurewin">
+      <meta itemprop="description" content="life is worthless">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清茶、淡飯">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Exception
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-15 10:48:09 / Modified: 10:51:04" itemprop="dateCreated datePublished" datetime="2020-04-15T10:48:09-04:00">2020-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/myBlog.github.io/categories/programming/" itemprop="url" rel="index"><span itemprop="name">programming</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/myBlog.github.io/2020/04/15/Exception/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/myBlog.github.io/2020/04/15/Exception/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Exception.png" alt=""></p>
+<h2 id="Handling-Exceptions"><a href="#Handling-Exceptions" class="headerlink" title="Handling Exceptions"></a>Handling Exceptions</h2><blockquote>
+<p>An exception is an object that is generated as the result of an error or an unexpected event.</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Exception-Handler"><a href="#Exception-Handler" class="headerlink" title="Exception Handler"></a>Exception Handler</h3><p>To detect that an exception has been thrown and prevent it from halting your application, Java allows you to create <strong>exception handler</strong>.</p>
+<p><strong>Attention:</strong></p>
+<p>If your code does not handle an exception when it is thrown, the <em>default exception handler</em> deals with it. The default exception handler prints an error message and <strong>crashes the program</strong>.</p>
+<h3 id="Exception-Classes"><a href="#Exception-Classes" class="headerlink" title="Exception Classes"></a>Exception Classes</h3><p>As previously mentioned, <strong>an exception is an object.</strong> Exception objects are created from classes in the Java API. All of the exceptions that you will handle are instances of classes that inherit from Exception.</p>
+<blockquote>
+<p>The exception classes are in package in the Java API. For example, <code>FileNotFoundException</code> is in the <code>java.io.package</code>.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414231539.png" alt=""></p>
+<h3 id="Handling-an-Exception"><a href="#Handling-an-Exception" class="headerlink" title="Handling an Exception"></a>Handling an Exception</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Basic Syntax</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    ...statements</span><br><span class="line">&#125;<span class="keyword">catch</span>(ExceptionType parameters)&#123;</span><br><span class="line">    ...statements</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You can think of the code in the try block as being “protected” because the application will not halt if the try block throws an exception.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[ ] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">    System.out.println(myNumbers[<span class="number">10</span>]); <span class="comment">// error!</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------</span></span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.ArrayIndexOutOfBoundsException: <span class="number">10</span></span><br><span class="line">        at MyClass.main(MyClass.java:<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Fixed it by using <strong>try/catch</strong> statement</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[ ] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">      System.out.println(myNumbers[<span class="number">10</span>]);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Something went wrong."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">// Exception is super class of other specific exceptions.</span></span><br><span class="line"> <span class="comment">// We will talk about it on polymorphism.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Attention:</strong></p>
+<p>Not all statements inside a <strong>try</strong> block will be executed. When an exception is thrown, <strong>the try block is exited immediately</strong>. This means that statements appearing in the try block after the offending statement will not be executed.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234002.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234116.png" alt=""></p>
+<h3 id="Retrieving-the-Default-Error-Message"><a href="#Retrieving-the-Default-Error-Message" class="headerlink" title="Retrieving the Default Error Message"></a>Retrieving the Default Error Message</h3><p>Each exception object has a method named <code>getMessage</code> that can be used to retrieve the<br>default error message for the exception.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcepTest</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">         <span class="keyword">int</span> a[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">         System.out.println(<span class="string">"Access element three :"</span> + a[<span class="number">3</span>]);</span><br><span class="line">      &#125;<span class="keyword">catch</span>(ArrayIndexOutOfBoundsException e)&#123;</span><br><span class="line">         System.out.println(<span class="string">"Exception thrown  :"</span> + e.getMessage());</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(<span class="string">"Out of the block"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Common Exception Methods</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// return a Throwable object to represent the reason of exception</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Throwable <span class="title">getCause</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// Print out the system error comes from stack</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pritStackTrace</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Polymorphic-References-to-Exceptions"><a href="#Polymorphic-References-to-Exceptions" class="headerlink" title="Polymorphic References to Exceptions"></a>Polymorphic References to Exceptions</h3><p>a reference variable of a <strong>superclass type</strong> can reference <strong>subclass objects</strong>. This is called <strong>polymorphism</strong>. When handling exceptions, you can use a polymorphic reference as a parameter in the <code>catch</code> clause.</p>
+<p>For example, all of the exceptions that we have dealt with inherit from the <strong>Exception class</strong>. So, a <code>catch</code> clause that uses a parameter variable of the Exception type is capable of catching any exception that inherits from the <strong>Exception class</strong>.</p>
+<h3 id="Using-Multiple-catch-Clauses-to-Handle"><a href="#Using-Multiple-catch-Clauses-to-Handle" class="headerlink" title="Using Multiple catch Clauses to Handle"></a>Using Multiple <code>catch</code> Clauses to Handle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">    Scanner inputFile = <span class="keyword">new</span> Scanner(file)</span><br><span class="line">&#125; <span class="keyword">catch</span>(FileNotFoundException e) &#123; <span class="comment">// Not valid!</span></span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// You can use the same parameter name because the code only "hit" the error once.</span></span><br><span class="line"><span class="comment">// When the code "kick" the error, it will be sent to the related exception.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Attention: Handle Each Exception Only Once in a <code>try</code> Statement</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	number = Integer.parseInt(str);</span><br><span class="line">&#125;<span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(<span class="string">"Bad number format."</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ERROR!!! NumberFormatException has already been caught!</span></span><br><span class="line"><span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(str + <span class="string">" is not a number."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sometimes you can cause this error by using polymorphic references. For example, look at following picture, which shows an inheritance hierarchy for the <code>NumberFormatException</code> class.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415002149.png" alt=""></p>
+<p>As you can see from the figure, the <code>NumberFormatException</code> class inherits from the <code>IllegalArgumentException</code> class. Now look at the following code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	number = Integer.parseInt(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (IllegalArgumentException e)&#123;</span><br><span class="line">	System.out.println(<span class="string">"Bad number format."</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// This will also cause an error.</span></span><br><span class="line"><span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(str + <span class="string">" is not a number."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The compiler issues an error message regarding the second catch clause, reporting that <code>NumberFormatException</code> has already been caught. This is because the first catch clause, which catches <code>IllegalArgumentException</code> objects, will <strong>polymorphically</strong> catch <code>NumberFormatException</code> objects.</p>
+<h3 id="The-finally-Clause"><a href="#The-finally-Clause" class="headerlink" title="The finally Clause"></a>The <code>finally</code> Clause</h3><p>As I mentioned before, the code inside the <code>try</code> block will not be executed when the error occurs. But what if you want the code to be successfully executed after throwing a error? You can use the key word called <code>finally</code>.</p>
+<p>The try statement may have an optional <code>finally</code> clause, which must appear after all of the catch clauses.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">      System.out.println(myNumbers[<span class="number">10</span>]);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Something went wrong."</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"The 'try catch' is finished."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// --------------------------------------------------</span></span><br><span class="line"><span class="comment">// The output will be:</span></span><br><span class="line">Something went wrong.</span><br><span class="line">The <span class="string">'try catch'</span> is finished.</span><br></pre></td></tr></table></figure>
+
+<p><strong>The statements in the <code>finally</code> block execute whether an exception occurs or not.</strong></p>
+<h3 id="The-Stack-Trace"><a href="#The-Stack-Trace" class="headerlink" title="The Stack Trace"></a>The Stack Trace</h3><p>A stack trace is a list of all the methods in the call stack. It indicates the method that was executing when an exception occurred and all of the methods that were called in order to execute that method.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Program Output</span></span><br><span class="line">Calling myMethod...</span><br><span class="line">Calling produceError...</span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.StringIndexOutOfBoundsException:</span><br><span class="line">String index out of range: <span class="number">3</span></span><br><span class="line">at java.lang.String.charAt(Unknown Source)</span><br><span class="line">at StackTrace.produceError(StackTrace.java:<span class="number">35</span>)</span><br><span class="line">at StackTrace.myMethod(StackTrace.java:</span><br></pre></td></tr></table></figure>
+
+<h3 id="Handling-Multiple-Exceptions-with-One-catch-Clause"><a href="#Handling-Multiple-Exceptions-with-One-catch-Clause" class="headerlink" title="Handling Multiple Exceptions with One catch Clause"></a>Handling Multiple Exceptions with One <code>catch</code> Clause</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">(<span class="keyword">try</span> block statements . . .)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(NumberFormatException | IOException | InputMismatchException ex)</span><br><span class="line">&#123;</span><br><span class="line">respondToError();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="When-an-Exception-Is-Not-Caught"><a href="#When-an-Exception-Is-Not-Caught" class="headerlink" title="When an Exception Is Not Caught"></a>When an Exception Is Not Caught</h3><p>When an exception is thrown, it cannot be ignored. It must be handled by the program, or by the default exception handler.</p>
+<h3 id="Checked-and-Unchecked-Exceptions"><a href="#Checked-and-Unchecked-Exceptions" class="headerlink" title="Checked and Unchecked Exceptions"></a>Checked and Unchecked Exceptions</h3><p><strong>Unchecked exception:</strong></p>
+<p>Unchecked exceptions are those that inherit from the Error class or the <code>RuntimeException</code> class. Recall that the exceptions that inherit from Error are thrown when a critical error occurs, such as running out of memory.</p>
+<p>You should not handle these exceptions because the conditions that cause them can rarely be dealt with in the program.</p>
+<p><strong>Checked exception:</strong></p>
+<p>All of the remaining exceptions (that is, those that do not inherit from Error or <code>RuntimeException</code>) are checked exceptions. These are the exceptions that you should handle in your program.</p>
+<p>If the code in a method can potentially throw a checked exception, then that method must meet one of the following requirements:</p>
+<p><strong>• It must handle the exception, or</strong></p>
+<p><strong>• It must have a throws clause listed in the method header.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Checked Exception</th>
+<th>Unchecked Exception</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ClassNotFoundException</code></td>
+<td><code>ArithmeticException</code></td>
+</tr>
+<tr>
+<td><code>CloneNotSupportedException</code></td>
+<td><code>ArrayStoreException</code></td>
+</tr>
+<tr>
+<td><code>IllegalAccessException</code></td>
+<td><code>IllegalArgumentException</code></td>
+</tr>
+<tr>
+<td><code>InstantiationException</code></td>
+<td><code>NumberFormatException</code></td>
+</tr>
+<tr>
+<td><code>InterruptedException</code></td>
+<td><code>IllegalMonitorStateException</code></td>
+</tr>
+<tr>
+<td><code>NoSuchFieldException</code></td>
+<td><code>IllegalStateException</code></td>
+</tr>
+<tr>
+<td><code>NoSuchMethodException</code></td>
+<td><code>SecurityException</code></td>
+</tr>
+</tbody></table>
+<h2 id="Throwing-Exceptions"><a href="#Throwing-Exceptions" class="headerlink" title="Throwing Exceptions"></a>Throwing Exceptions</h2><blockquote>
+<p>*<em>Concept: *</em> You can write code that throws one of the standard Java exceptions, or an instance of a custom exception class that you have designed.</p>
+</blockquote>
+<p>You can use the <code>throw</code> statement to throw an exception manually. The general format of the <code>throw</code> statement is as follows:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ExceptionType(MessageString);</span><br></pre></td></tr></table></figure>
+
+<p>The <code>throw</code> statement causes an exception object to be created and thrown.</p>
+<p><strong>The <code>MessageString</code> argument contains a custom error message that can be retrieved from the exception object’s <code>getMessage</code> method.</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (age &lt; <span class="number">18</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ArithmeticException(<span class="string">"Access denied - You must be at least 18 years old."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"Access granted - You are old enough!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    checkAge(<span class="number">15</span>); <span class="comment">// Set age to 15 (which is below 18...)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>NOTE:</strong> Because the <code>ArithmeticException</code> class inherits from the <code>RuntimeException</code> class, it is unchecked. <strong>If we had chosen a checked exception class, we would have to put a throws clause in the constructor’s header.</strong></p>
+</blockquote>
+<h3 id="Creating-Your-Own-Exception-Classes"><a href="#Creating-Your-Own-Exception-Classes" class="headerlink" title="Creating Your Own Exception Classes"></a>Creating Your Own Exception Classes</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NegativeStartingBalance</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">      This constructor uses a generic</span></span><br><span class="line"><span class="comment">      error message.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">NegativeStartingBalance</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(<span class="string">"Error: Negative starting balance"</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">      This constructor specifies the bad starting</span></span><br><span class="line"><span class="comment">      balance in the error message.</span></span><br><span class="line"><span class="comment">      <span class="doctag">@param</span> The bad starting balance.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">NegativeStartingBalance</span><span class="params">(<span class="keyword">double</span> amount)</span></span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(<span class="string">"Error: Negative starting balance: "</span> + amount);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <strong>no-arg constructor</strong> passes the string “Error: Negative starting balance” to the superclass constructor. This is the error message that is retrievable from an object’s <code>getMessage</code> method.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BankAccount</span><span class="params">(<span class="keyword">double</span> startBalance)</span></span></span><br><span class="line"><span class="function"><span class="keyword">throws</span> NegativeStartingBalance</span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (startBalance &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> NegativeStartingBalance(startBalance);</span><br><span class="line">	balance = startBalance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note that <code>NegativeStartingBalance</code> extends the <strong>Exception class</strong>. This means that it is a <strong>checked exception</strong> class. Because of this, <strong>the constructor header must have a <code>throws</code> clause listing the exception type.</strong></p>
+<h3 id="Using-the-exception-Tag-in-Documentation-Comments"><a href="#Using-the-exception-Tag-in-Documentation-Comments" class="headerlink" title="Using the @exception Tag in Documentation Comments"></a>Using the @exception Tag in Documentation Comments</h3><p>When the javadoc utility sees an @exception tag inside a method’s documentation comments, it knows that the name of an exception appears next, followed by a description of the events that cause the exception.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @exception ExceptionName Description</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Remember the following points about @exception tag comments:</strong></p>
+<p>• The @exception tag in a method’s documentation comment must appear after the general<br>description of the method.</p>
+<p>• The description can span several lines. It ends at the end of the documentation comment<br>(the */ symbol), or at the beginning of another tag.</p>
+<h2 id="Advanced-Topics-Binary-Files-Random-Access-Files-and-Object-Serialization"><a href="#Advanced-Topics-Binary-Files-Random-Access-Files-and-Object-Serialization" class="headerlink" title="Advanced Topics: Binary Files, Random Access Files, and Object Serialization"></a>Advanced Topics: Binary Files, Random Access Files, and Object Serialization</h2><blockquote>
+<p>*<em>CONCEPT: *</em></p>
+<p>A file that contains raw binary data is known as a binary file. The content of a <strong>binary file</strong> is not formatted as text, and not meant to be opened in a text editor.</p>
+<p>A <strong>random access file</strong> is a file that allows a program to read data from any location within the file, or write data to any location within the file.</p>
+<p><strong>Object serialization</strong> is the process of converting an object to a series of bytes and saving them to a file. De-serialization is the process of reconstructing a serialized object.</p>
+</blockquote>
+<h3 id="Binary-Files"><a href="#Binary-Files" class="headerlink" title="Binary Files"></a>Binary Files</h3><p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014101.png" alt=""></p>
+<p>When a number such as 1297 is stored in the computer’s memory, it isn’t stored as text, however. It is formatted as a binary number.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014200.png" alt=""></p>
+<h3 id="Writing-Data-to-Binary-File"><a href="#Writing-Data-to-Binary-File" class="headerlink" title="Writing Data to Binary File"></a>Writing Data to Binary File</h3><p>To write data to a binary file you must create objects from the following classes:</p>
+<p><code>FileOutputStream</code></p>
+<p>This class, which is in the <code>java.io</code> package, allows you to open a file for writing binary data and establish a connection with it; however, it provides only basic functionality for writing bytes to the file.</p>
+<p><code>DataOutputStream</code></p>
+<p>This class which is in the <code>java.io</code> package, allows you to write data of any primitive type or String objects to a binary file. The <code>DataOutputStream</code> class by itself cannot directly access a file, however. It is used in conjunction with a <code>FileOutputStream</code> object that has a connection to a file.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FileOutputStream fstream = <span class="keyword">new</span> FileOutputStream(<span class="string">"MyInfo.dat"</span>);</span><br><span class="line">DataOutputStream outputFile = <span class="keyword">new</span> DataOutputStream(fstream);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>NOTE: ** **If the file that you are opening with the <code>FileOutputStream</code> object already</strong> &gt; <strong>exists, it will be erased and an empty file by the same name will be created.</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DataOutputStream outputFile =</span><br><span class="line"><span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"MyInfo.dat"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>Once the <code>DataOutputStream</code> object has been created, you can use it to write binary data to<br>the file.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014450.png" alt=""></p>
+<h2 id="General-Skill"><a href="#General-Skill" class="headerlink" title="General Skill"></a>General Skill</h2><p>Import Java package</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// For File class and FileNotFoundException</span></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fro the Scanner class</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">// For the JOptionPane class</span></span><br><span class="line"><span class="keyword">import</span> javax.swing.JOptionPane;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/myBlog.github.io/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog.github.io/2020/04/07/Git/" rel="prev" title="Git">
+      <i class="fa fa-chevron-left"></i> Git
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Handling-Exceptions"><span class="nav-number">1.</span> <span class="nav-text">Handling Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception-Handler"><span class="nav-number">1.1.</span> <span class="nav-text">Exception Handler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception-Classes"><span class="nav-number">1.2.</span> <span class="nav-text">Exception Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-an-Exception"><span class="nav-number">1.3.</span> <span class="nav-text">Handling an Exception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrieving-the-Default-Error-Message"><span class="nav-number">1.4.</span> <span class="nav-text">Retrieving the Default Error Message</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphic-References-to-Exceptions"><span class="nav-number">1.5.</span> <span class="nav-text">Polymorphic References to Exceptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Multiple-catch-Clauses-to-Handle"><span class="nav-number">1.6.</span> <span class="nav-text">Using Multiple catch Clauses to Handle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-finally-Clause"><span class="nav-number">1.7.</span> <span class="nav-text">The finally Clause</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Stack-Trace"><span class="nav-number">1.8.</span> <span class="nav-text">The Stack Trace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-Multiple-Exceptions-with-One-catch-Clause"><span class="nav-number">1.9.</span> <span class="nav-text">Handling Multiple Exceptions with One catch Clause</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-an-Exception-Is-Not-Caught"><span class="nav-number">1.10.</span> <span class="nav-text">When an Exception Is Not Caught</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Checked-and-Unchecked-Exceptions"><span class="nav-number">1.11.</span> <span class="nav-text">Checked and Unchecked Exceptions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Throwing-Exceptions"><span class="nav-number">2.</span> <span class="nav-text">Throwing Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-Your-Own-Exception-Classes"><span class="nav-number">2.1.</span> <span class="nav-text">Creating Your Own Exception Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-the-exception-Tag-in-Documentation-Comments"><span class="nav-number">2.2.</span> <span class="nav-text">Using the @exception Tag in Documentation Comments</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-Topics-Binary-Files-Random-Access-Files-and-Object-Serialization"><span class="nav-number">3.</span> <span class="nav-text">Advanced Topics: Binary Files, Random Access Files, and Object Serialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Files"><span class="nav-number">3.1.</span> <span class="nav-text">Binary Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-Data-to-Binary-File"><span class="nav-number">3.2.</span> <span class="nav-text">Writing Data to Binary File</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#General-Skill"><span class="nav-number">4.</span> <span class="nav-text">General Skill</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FgSurewin"
+      src="/myBlog.github.io/images/center.jpg">
+  <p class="site-author-name" itemprop="name">FgSurewin</p>
+  <div class="site-description" itemprop="description">life is worthless</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myBlog.github.io/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/myBlog.github.io/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myBlog.github.io/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/FgSurewin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;FgSurewin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Mrliu3244794@gmail.com" title="E-Mail → mailto:Mrliu3244794@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="/myBlog.github.io/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FgSurewin</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myBlog.github.io/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myBlog.github.io/js/utils.js"></script>
+
+<script src="/myBlog.github.io/js/motion.js"></script>
+
+
+<script src="/myBlog.github.io/js/schemes/muse.js"></script>
+
+
+<script src="/myBlog.github.io/js/next-boot.js"></script>
+
+<script src="/myBlog.github.io/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/myBlog.github.io/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Iv3Szu1H8nfuR7V8SH54pjaV-9Nh9j0Va',
+      appKey     : 'OUexH0uEfuN5pTWoCAx8jdfK',
+      placeholder: "Make a comment",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'en' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.5/lib/darkmode-js.min.js"></script>
+		<script>
+			var options = {
+				bottom: '32px', // default: '32px'
+				right: '32px', // default: '32px'
+				left: 'unset', // default: 'unset'
+				time: '0.5s', // default: '0.3s'
+				mixColor: '#fff', // default: '#fff'
+				backgroundColor: '#fff', // default: '#fff'
+				buttonColorDark: '#100f2c', // default: '#100f2c'
+				buttonColorLight: '#fff', // default: '#fff'
+				saveInCookies: true, // default: true,
+				label: '🌓', // default: ''
+				autoMatchOsTheme: true, // default: true
+			};
+
+			const darkmode = new Darkmode(options);
+			darkmode.showWidget();
+		</script>
+		<style>
+button.darkmode-toggle {
+  z-index: 9999;
+}
+img, .darkmode-ignore {
+  isolation: isolate;
+  display: block;
+}
+</style>
+</body>
+</html>

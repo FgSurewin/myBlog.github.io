@@ -1,6 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Exception</title>
+    <url>/myBlog.github.io/2020/04/15/Exception/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Exception.png" alt=""></p>
+<h2 id="Handling-Exceptions"><a href="#Handling-Exceptions" class="headerlink" title="Handling Exceptions"></a>Handling Exceptions</h2><blockquote>
+<p>An exception is an object that is generated as the result of an error or an unexpected event.</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Exception-Handler"><a href="#Exception-Handler" class="headerlink" title="Exception Handler"></a>Exception Handler</h3><p>To detect that an exception has been thrown and prevent it from halting your application, Java allows you to create <strong>exception handler</strong>.</p>
+<p><strong>Attention:</strong></p>
+<p>If your code does not handle an exception when it is thrown, the <em>default exception handler</em> deals with it. The default exception handler prints an error message and <strong>crashes the program</strong>.</p>
+<h3 id="Exception-Classes"><a href="#Exception-Classes" class="headerlink" title="Exception Classes"></a>Exception Classes</h3><p>As previously mentioned, <strong>an exception is an object.</strong> Exception objects are created from classes in the Java API. All of the exceptions that you will handle are instances of classes that inherit from Exception.</p>
+<blockquote>
+<p>The exception classes are in package in the Java API. For example, <code>FileNotFoundException</code> is in the <code>java.io.package</code>.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414231539.png" alt=""></p>
+<h3 id="Handling-an-Exception"><a href="#Handling-an-Exception" class="headerlink" title="Handling an Exception"></a>Handling an Exception</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Basic Syntax</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    ...statements</span><br><span class="line">&#125;<span class="keyword">catch</span>(ExceptionType parameters)&#123;</span><br><span class="line">    ...statements</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You can think of the code in the try block as being “protected” because the application will not halt if the try block throws an exception.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[ ] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">    System.out.println(myNumbers[<span class="number">10</span>]); <span class="comment">// error!</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------</span></span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.ArrayIndexOutOfBoundsException: <span class="number">10</span></span><br><span class="line">        at MyClass.main(MyClass.java:<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Fixed it by using <strong>try/catch</strong> statement</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[ ] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">      System.out.println(myNumbers[<span class="number">10</span>]);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Something went wrong."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">// Exception is super class of other specific exceptions.</span></span><br><span class="line"> <span class="comment">// We will talk about it on polymorphism.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Attention:</strong></p>
+<p>Not all statements inside a <strong>try</strong> block will be executed. When an exception is thrown, <strong>the try block is exited immediately</strong>. This means that statements appearing in the try block after the offending statement will not be executed.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234002.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200414234116.png" alt=""></p>
+<h3 id="Retrieving-the-Default-Error-Message"><a href="#Retrieving-the-Default-Error-Message" class="headerlink" title="Retrieving the Default Error Message"></a>Retrieving the Default Error Message</h3><p>Each exception object has a method named <code>getMessage</code> that can be used to retrieve the<br>default error message for the exception.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcepTest</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">         <span class="keyword">int</span> a[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">         System.out.println(<span class="string">"Access element three :"</span> + a[<span class="number">3</span>]);</span><br><span class="line">      &#125;<span class="keyword">catch</span>(ArrayIndexOutOfBoundsException e)&#123;</span><br><span class="line">         System.out.println(<span class="string">"Exception thrown  :"</span> + e.getMessage());</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(<span class="string">"Out of the block"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Common Exception Methods</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// return a Throwable object to represent the reason of exception</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Throwable <span class="title">getCause</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// Print out the system error comes from stack</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pritStackTrace</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Polymorphic-References-to-Exceptions"><a href="#Polymorphic-References-to-Exceptions" class="headerlink" title="Polymorphic References to Exceptions"></a>Polymorphic References to Exceptions</h3><p>a reference variable of a <strong>superclass type</strong> can reference <strong>subclass objects</strong>. This is called <strong>polymorphism</strong>. When handling exceptions, you can use a polymorphic reference as a parameter in the <code>catch</code> clause.</p>
+<p>For example, all of the exceptions that we have dealt with inherit from the <strong>Exception class</strong>. So, a <code>catch</code> clause that uses a parameter variable of the Exception type is capable of catching any exception that inherits from the <strong>Exception class</strong>.</p>
+<h3 id="Using-Multiple-catch-Clauses-to-Handle"><a href="#Using-Multiple-catch-Clauses-to-Handle" class="headerlink" title="Using Multiple catch Clauses to Handle"></a>Using Multiple <code>catch</code> Clauses to Handle</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">    Scanner inputFile = <span class="keyword">new</span> Scanner(file)</span><br><span class="line">&#125; <span class="keyword">catch</span>(FileNotFoundException e) &#123; <span class="comment">// Not valid!</span></span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// You can use the same parameter name because the code only "hit" the error once.</span></span><br><span class="line"><span class="comment">// When the code "kick" the error, it will be sent to the related exception.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Attention: Handle Each Exception Only Once in a <code>try</code> Statement</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	number = Integer.parseInt(str);</span><br><span class="line">&#125;<span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(<span class="string">"Bad number format."</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ERROR!!! NumberFormatException has already been caught!</span></span><br><span class="line"><span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(str + <span class="string">" is not a number."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sometimes you can cause this error by using polymorphic references. For example, look at following picture, which shows an inheritance hierarchy for the <code>NumberFormatException</code> class.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415002149.png" alt=""></p>
+<p>As you can see from the figure, the <code>NumberFormatException</code> class inherits from the <code>IllegalArgumentException</code> class. Now look at the following code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	number = Integer.parseInt(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (IllegalArgumentException e)&#123;</span><br><span class="line">	System.out.println(<span class="string">"Bad number format."</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// This will also cause an error.</span></span><br><span class="line"><span class="keyword">catch</span> (NumberFormatException e)&#123;</span><br><span class="line">	System.out.println(str + <span class="string">" is not a number."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The compiler issues an error message regarding the second catch clause, reporting that <code>NumberFormatException</code> has already been caught. This is because the first catch clause, which catches <code>IllegalArgumentException</code> objects, will <strong>polymorphically</strong> catch <code>NumberFormatException</code> objects.</p>
+<h3 id="The-finally-Clause"><a href="#The-finally-Clause" class="headerlink" title="The finally Clause"></a>The <code>finally</code> Clause</h3><p>As I mentioned before, the code inside the <code>try</code> block will not be executed when the error occurs. But what if you want the code to be successfully executed after throwing a error? You can use the key word called <code>finally</code>.</p>
+<p>The try statement may have an optional <code>finally</code> clause, which must appear after all of the catch clauses.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">int</span>[] myNumbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">      System.out.println(myNumbers[<span class="number">10</span>]);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Something went wrong."</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"The 'try catch' is finished."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// --------------------------------------------------</span></span><br><span class="line"><span class="comment">// The output will be:</span></span><br><span class="line">Something went wrong.</span><br><span class="line">The <span class="string">'try catch'</span> is finished.</span><br></pre></td></tr></table></figure>
+
+<p><strong>The statements in the <code>finally</code> block execute whether an exception occurs or not.</strong></p>
+<h3 id="The-Stack-Trace"><a href="#The-Stack-Trace" class="headerlink" title="The Stack Trace"></a>The Stack Trace</h3><p>A stack trace is a list of all the methods in the call stack. It indicates the method that was executing when an exception occurred and all of the methods that were called in order to execute that method.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Program Output</span></span><br><span class="line">Calling myMethod...</span><br><span class="line">Calling produceError...</span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.StringIndexOutOfBoundsException:</span><br><span class="line">String index out of range: <span class="number">3</span></span><br><span class="line">at java.lang.String.charAt(Unknown Source)</span><br><span class="line">at StackTrace.produceError(StackTrace.java:<span class="number">35</span>)</span><br><span class="line">at StackTrace.myMethod(StackTrace.java:</span><br></pre></td></tr></table></figure>
+
+<h3 id="Handling-Multiple-Exceptions-with-One-catch-Clause"><a href="#Handling-Multiple-Exceptions-with-One-catch-Clause" class="headerlink" title="Handling Multiple Exceptions with One catch Clause"></a>Handling Multiple Exceptions with One <code>catch</code> Clause</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">(<span class="keyword">try</span> block statements . . .)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(NumberFormatException | IOException | InputMismatchException ex)</span><br><span class="line">&#123;</span><br><span class="line">respondToError();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="When-an-Exception-Is-Not-Caught"><a href="#When-an-Exception-Is-Not-Caught" class="headerlink" title="When an Exception Is Not Caught"></a>When an Exception Is Not Caught</h3><p>When an exception is thrown, it cannot be ignored. It must be handled by the program, or by the default exception handler.</p>
+<h3 id="Checked-and-Unchecked-Exceptions"><a href="#Checked-and-Unchecked-Exceptions" class="headerlink" title="Checked and Unchecked Exceptions"></a>Checked and Unchecked Exceptions</h3><p><strong>Unchecked exception:</strong></p>
+<p>Unchecked exceptions are those that inherit from the Error class or the <code>RuntimeException</code> class. Recall that the exceptions that inherit from Error are thrown when a critical error occurs, such as running out of memory.</p>
+<p>You should not handle these exceptions because the conditions that cause them can rarely be dealt with in the program.</p>
+<p><strong>Checked exception:</strong></p>
+<p>All of the remaining exceptions (that is, those that do not inherit from Error or <code>RuntimeException</code>) are checked exceptions. These are the exceptions that you should handle in your program.</p>
+<p>If the code in a method can potentially throw a checked exception, then that method must meet one of the following requirements:</p>
+<p><strong>• It must handle the exception, or</strong></p>
+<p><strong>• It must have a throws clause listed in the method header.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Checked Exception</th>
+<th>Unchecked Exception</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ClassNotFoundException</code></td>
+<td><code>ArithmeticException</code></td>
+</tr>
+<tr>
+<td><code>CloneNotSupportedException</code></td>
+<td><code>ArrayStoreException</code></td>
+</tr>
+<tr>
+<td><code>IllegalAccessException</code></td>
+<td><code>IllegalArgumentException</code></td>
+</tr>
+<tr>
+<td><code>InstantiationException</code></td>
+<td><code>NumberFormatException</code></td>
+</tr>
+<tr>
+<td><code>InterruptedException</code></td>
+<td><code>IllegalMonitorStateException</code></td>
+</tr>
+<tr>
+<td><code>NoSuchFieldException</code></td>
+<td><code>IllegalStateException</code></td>
+</tr>
+<tr>
+<td><code>NoSuchMethodException</code></td>
+<td><code>SecurityException</code></td>
+</tr>
+</tbody></table>
+<h2 id="Throwing-Exceptions"><a href="#Throwing-Exceptions" class="headerlink" title="Throwing Exceptions"></a>Throwing Exceptions</h2><blockquote>
+<p>*<em>Concept: *</em> You can write code that throws one of the standard Java exceptions, or an instance of a custom exception class that you have designed.</p>
+</blockquote>
+<p>You can use the <code>throw</code> statement to throw an exception manually. The general format of the <code>throw</code> statement is as follows:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ExceptionType(MessageString);</span><br></pre></td></tr></table></figure>
+
+<p>The <code>throw</code> statement causes an exception object to be created and thrown.</p>
+<p><strong>The <code>MessageString</code> argument contains a custom error message that can be retrieved from the exception object’s <code>getMessage</code> method.</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (age &lt; <span class="number">18</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ArithmeticException(<span class="string">"Access denied - You must be at least 18 years old."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"Access granted - You are old enough!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    checkAge(<span class="number">15</span>); <span class="comment">// Set age to 15 (which is below 18...)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>NOTE:</strong> Because the <code>ArithmeticException</code> class inherits from the <code>RuntimeException</code> class, it is unchecked. <strong>If we had chosen a checked exception class, we would have to put a throws clause in the constructor’s header.</strong></p>
+</blockquote>
+<h3 id="Creating-Your-Own-Exception-Classes"><a href="#Creating-Your-Own-Exception-Classes" class="headerlink" title="Creating Your Own Exception Classes"></a>Creating Your Own Exception Classes</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NegativeStartingBalance</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">      This constructor uses a generic</span></span><br><span class="line"><span class="comment">      error message.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">NegativeStartingBalance</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(<span class="string">"Error: Negative starting balance"</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">      This constructor specifies the bad starting</span></span><br><span class="line"><span class="comment">      balance in the error message.</span></span><br><span class="line"><span class="comment">      <span class="doctag">@param</span> The bad starting balance.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">NegativeStartingBalance</span><span class="params">(<span class="keyword">double</span> amount)</span></span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(<span class="string">"Error: Negative starting balance: "</span> + amount);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <strong>no-arg constructor</strong> passes the string “Error: Negative starting balance” to the superclass constructor. This is the error message that is retrievable from an object’s <code>getMessage</code> method.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BankAccount</span><span class="params">(<span class="keyword">double</span> startBalance)</span></span></span><br><span class="line"><span class="function"><span class="keyword">throws</span> NegativeStartingBalance</span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (startBalance &lt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> NegativeStartingBalance(startBalance);</span><br><span class="line">	balance = startBalance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note that <code>NegativeStartingBalance</code> extends the <strong>Exception class</strong>. This means that it is a <strong>checked exception</strong> class. Because of this, <strong>the constructor header must have a <code>throws</code> clause listing the exception type.</strong></p>
+<h3 id="Using-the-exception-Tag-in-Documentation-Comments"><a href="#Using-the-exception-Tag-in-Documentation-Comments" class="headerlink" title="Using the @exception Tag in Documentation Comments"></a>Using the @exception Tag in Documentation Comments</h3><p>When the javadoc utility sees an @exception tag inside a method’s documentation comments, it knows that the name of an exception appears next, followed by a description of the events that cause the exception.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// @exception ExceptionName Description</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Remember the following points about @exception tag comments:</strong></p>
+<p>• The @exception tag in a method’s documentation comment must appear after the general<br>description of the method.</p>
+<p>• The description can span several lines. It ends at the end of the documentation comment<br>(the */ symbol), or at the beginning of another tag.</p>
+<h2 id="Advanced-Topics-Binary-Files-Random-Access-Files-and-Object-Serialization"><a href="#Advanced-Topics-Binary-Files-Random-Access-Files-and-Object-Serialization" class="headerlink" title="Advanced Topics: Binary Files, Random Access Files, and Object Serialization"></a>Advanced Topics: Binary Files, Random Access Files, and Object Serialization</h2><blockquote>
+<p>*<em>CONCEPT: *</em></p>
+<p>A file that contains raw binary data is known as a binary file. The content of a <strong>binary file</strong> is not formatted as text, and not meant to be opened in a text editor.</p>
+<p>A <strong>random access file</strong> is a file that allows a program to read data from any location within the file, or write data to any location within the file.</p>
+<p><strong>Object serialization</strong> is the process of converting an object to a series of bytes and saving them to a file. De-serialization is the process of reconstructing a serialized object.</p>
+</blockquote>
+<h3 id="Binary-Files"><a href="#Binary-Files" class="headerlink" title="Binary Files"></a>Binary Files</h3><p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014101.png" alt=""></p>
+<p>When a number such as 1297 is stored in the computer’s memory, it isn’t stored as text, however. It is formatted as a binary number.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014200.png" alt=""></p>
+<h3 id="Writing-Data-to-Binary-File"><a href="#Writing-Data-to-Binary-File" class="headerlink" title="Writing Data to Binary File"></a>Writing Data to Binary File</h3><p>To write data to a binary file you must create objects from the following classes:</p>
+<p><code>FileOutputStream</code></p>
+<p>This class, which is in the <code>java.io</code> package, allows you to open a file for writing binary data and establish a connection with it; however, it provides only basic functionality for writing bytes to the file.</p>
+<p><code>DataOutputStream</code></p>
+<p>This class which is in the <code>java.io</code> package, allows you to write data of any primitive type or String objects to a binary file. The <code>DataOutputStream</code> class by itself cannot directly access a file, however. It is used in conjunction with a <code>FileOutputStream</code> object that has a connection to a file.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileOutputStream fstream = <span class="keyword">new</span> FileOutputStream(<span class="string">"MyInfo.dat"</span>);</span><br><span class="line">DataOutputStream outputFile = <span class="keyword">new</span> DataOutputStream(fstream);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>NOTE: ** **If the file that you are opening with the <code>FileOutputStream</code> object already</strong> &gt; <strong>exists, it will be erased and an empty file by the same name will be created.</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DataOutputStream outputFile =</span><br><span class="line"><span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"MyInfo.dat"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>Once the <code>DataOutputStream</code> object has been created, you can use it to write binary data to<br>the file.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200415014450.png" alt=""></p>
+<h2 id="General-Skill"><a href="#General-Skill" class="headerlink" title="General Skill"></a>General Skill</h2><p>Import Java package</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// For File class and FileNotFoundException</span></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fro the Scanner class</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">// For the JOptionPane class</span></span><br><span class="line"><span class="keyword">import</span> javax.swing.JOptionPane;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git</title>
     <url>/myBlog.github.io/2020/04/07/Git/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/night.png" alt=""></p>
