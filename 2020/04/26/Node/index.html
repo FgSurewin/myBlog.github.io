@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myBlog.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myBlog.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myBlog.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myBlog.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myBlog.github.io/css/main.css">
+
+
+<link rel="stylesheet" href="/myBlog.github.io/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/myBlog.github.io/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myBlog.github.io/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fgsurewin.github.io","root":"/myBlog.github.io/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="背景知识为了了解更多网络请求相关的知识, 决定学习一门后端的语言来实现前后数据的交互练习, 感受下那个过程. 而 Node.js 作为 JS 同源的产物, 当然是第一选择. 本以为会是轻车熟路的快速掌握, 谁知道在了解背景的时候就出现了各种专业名词的冲击. 为了更好的梳理一下自身的思路, 决定从背景知识开始整理.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node-Part I">
+<meta property="og:url" content="https://fgsurewin.github.io/myBlog.github.io/2020/04/26/Node/index.html">
+<meta property="og:site_name" content="清茶、淡飯">
+<meta property="og:description" content="背景知识为了了解更多网络请求相关的知识, 决定学习一门后端的语言来实现前后数据的交互练习, 感受下那个过程. 而 Node.js 作为 JS 同源的产物, 当然是第一选择. 本以为会是轻车熟路的快速掌握, 谁知道在了解背景的时候就出现了各种专业名词的冲击. 为了更好的梳理一下自身的思路, 决定从背景知识开始整理.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Node1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426000516.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426012109.png">
+<meta property="article:published_time" content="2020-04-26T05:37:49.000Z">
+<meta property="article:modified_time" content="2020-04-26T05:39:12.857Z">
+<meta property="article:author" content="FgSurewin">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Node1.png">
+
+<link rel="canonical" href="https://fgsurewin.github.io/myBlog.github.io/2020/04/26/Node/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Node-Part I | 清茶、淡飯</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myBlog.github.io/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">清茶、淡飯</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">To be a better man</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myBlog.github.io/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myBlog.github.io/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/myBlog.github.io/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myBlog.github.io/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fgsurewin.github.io/myBlog.github.io/2020/04/26/Node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myBlog.github.io/images/center.jpg">
+      <meta itemprop="name" content="FgSurewin">
+      <meta itemprop="description" content="life is worthless">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清茶、淡飯">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node-Part I
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-26 01:37:49 / Modified: 01:39:12" itemprop="dateCreated datePublished" datetime="2020-04-26T01:37:49-04:00">2020-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/myBlog.github.io/categories/programming/" itemprop="url" rel="index"><span itemprop="name">programming</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/myBlog.github.io/2020/04/26/Node/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/myBlog.github.io/2020/04/26/Node/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Node1.png" alt=""></p>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>为了了解更多网络请求相关的知识, 决定学习一门后端的语言来实现前后数据的交互练习, 感受下那个过程. 而 Node.js 作为 JS 同源的产物, 当然是第一选择.</p>
+<p>本以为会是轻车熟路的快速掌握, 谁知道在了解背景的时候就出现了各种专业名词的冲击. 为了更好的梳理一下自身的思路, 决定从背景知识开始整理.</p>
+<a id="more"></a>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p><strong>What is Node.js?</strong></p>
+<ul>
+<li>Node.js is a JavaScript runtime environment built on Chrome’s V8 JavaScript engine.</li>
+<li>Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.</li>
+<li>Node package ecosystem (npm) is the largest ecosystem of open source libraries in the entire world.</li>
+</ul>
+<p><strong>单线程如何实现非阻塞 I/O 和高并发?</strong></p>
+<p><strong>Node 的事件循环是什么?</strong></p>
+<h3 id="Node-是什么"><a href="#Node-是什么" class="headerlink" title="Node 是什么?"></a>Node 是什么?</h3><p>Node 是一个 JavaScript(严格来说是 ECMAScript)的 runtime, 可以将其想成一种编程语言的运行环境. 正如 Java 需要 JVM 一样.</p>
+<p>Node 的底层是使用 C++实现的, 语法则是遵循 ECMAScript 的规范.</p>
+<h3 id="回调函数-callback-function"><a href="#回调函数-callback-function" class="headerlink" title="回调函数(callback function)"></a>回调函数(callback function)</h3><p>回调函数在 Node 中出现的频率很高, 其实不管是 Node 还是现在主流的前端的框架, 使用回调函数已经是常态了.</p>
+<blockquote>
+<p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, a <strong>callback</strong>, also known as a “<strong>call-after</strong>“<a href="https://en.wikipedia.org/wiki/Callback_(computer_programming)#cite_note-1" target="_blank" rel="noopener">[1]</a> <strong>function</strong>, is any <a href="https://en.wikipedia.org/wiki/Executable_code" target="_blank" rel="noopener">executable code</a> that is passed as an <a href="https://en.wikipedia.org/wiki/Argument_(computer_science)" target="_blank" rel="noopener">argument</a> to other code; that other code is expected to <em>call back</em> (execute) the argument at a given time. This execution may be immediate as in a <strong>synchronous callback</strong>, or it might happen at a later time as in an <strong>asynchronous callback</strong>. –Wikipedia</p>
+</blockquote>
+<p>抛去那些操作系统的底层操作, 也不管异步还是同步, 我们可以简单理解回调函数就是将一个函数作为参数传入另外一个函数.</p>
+<p>根据维基百科的信息, 我们可以知道两个关键信息:</p>
+<ul>
+<li>回调函数存在于同步(synchronous)和异步(asynchronous)中, 不要认为回调一定是异步.</li>
+<li>executable code 是作为回调函数的关键 =&gt; 决定什么时候使用回调函数</li>
+</ul>
+<p>回调函数其实就是一个需要执行的代码块, 不管是异步还是同步, 当你需要执行该段代码块时你就可以考虑将其包装成为一个函数, 然后传入另外一个函数作为回调函数.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426000516.png" alt=""></p>
+<h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>简单而言, 进程是由多个线程组成的</p>
+<h4 id="进程-process"><a href="#进程-process" class="headerlink" title="进程(process)"></a>进程(process)</h4><blockquote>
+<p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位</p>
+</blockquote>
+<p>每一个程序的启动, 都会涉及数据的交互, 这时候操作系统会分配合适的空间来运行该程序.</p>
+<h4 id="线程-thread"><a href="#线程-thread" class="headerlink" title="线程(thread)"></a>线程(thread)</h4><p>在一个进程中, 为了有有效的利用该进程的效能, 可以分配多线程来提高运行性能.</p>
+<blockquote>
+<p>可以将进程比喻成一个工厂, 那么每条流水线则是多线程.</p>
+</blockquote>
+<h3 id="并行与并发"><a href="#并行与并发" class="headerlink" title="并行与并发"></a>并行与并发</h3><blockquote>
+<p>并行(parallel)与并发(concurrent)是两个很常见的概念, 两者虽然中文译名相似, 但实质上差别很大</p>
+</blockquote>
+<p><strong>在我看来, 并发是一种程序设计执行模式, 后并行则是程序执行状态.</strong></p>
+<p>举个例子, 假设我们去排队买火车票, 整个火车站只有一个工作人员, 但是有三个窗口, 三条长队. 每一次工作人员执行完一个窗口就会去下一个窗口. 这种情况就是并发.</p>
+<p>通俗而言, 多线程是实现并发一种方式之一. 我们回到问题, 我们以工作人员为工作的核心, 也就是我们的电脑的 CPU, 假设只有单核(一个工作人员), 并发则可以最大化的利用这个内核去完成(虽然比喻看上去, 换来换去没有什么速度提升, 但是实际上 CPU 的运行速度很快, 而且 CPU 本身有自己一套的选择任务和执行任务的规则, 当线程增加的时候, 可以看到内核的负荷会提高, 执行速度会加快.)</p>
+<p>那么并行则是增加工作人员, 也就是增加内核. 工作人员越多, 当然速度就会越快了. 所以我们看到并行其实也是并发这种设计模式中的一个子集, 本质上也是在想方设法地提高程序的运行效率, 但是选择的方向不同, 行为不同而已.</p>
+<h3 id="阻塞型-I-O-和非阻塞性-I-O"><a href="#阻塞型-I-O-和非阻塞性-I-O" class="headerlink" title="阻塞型 I/O 和非阻塞性 I/O"></a>阻塞型 I/O 和非阻塞性 I/O</h3><p>non-blocking I/O(非阻塞 I/O)是了解 Node 的关键, 也是 Node 的特色之一.</p>
+<p>首先要明白 I/O 就是 input/output, 通常指的是操作系统级别的 I/O, 例如读取磁盘数据</p>
+<p><strong>阻塞 I/O:</strong></p>
+<p>正如字面而言, 是阻塞的. 假设程序需要想读取磁盘的信息, 那么就整个程序就会暂停下来(虽然很短), 等信息获取完毕之后就会执行后面的任务.</p>
+<p><strong>非阻塞 I/O:</strong></p>
+<p>非阻塞 I/O 则是与阻塞相反, 当需要读取磁盘信息的时候, 会执行一个回调函数, 然后继续执行后面的代码. 注意, 以上的说法只是从宏观上去大致理解非阻塞 I/O 的含义, 对于 Node 而言, 情况会有点不同.</p>
+<p>也正是因为情况不同才会引出一个问题: 单线程怎么实现非阻塞 I/O?</p>
+<p>根据官方的解释是, Node 会利用操作系统自身的多线程来完成高并发的非阻塞 I/O</p>
+<blockquote>
+<p>Since most modern <strong>kernels</strong> are multi-threaded, they can handle multiple operations executing in the background. When one of these operations completes, the kernel tells Node.js so that the appropriate callback may be added to the <strong>poll</strong> queue to eventually be executed.</p>
+</blockquote>
+<p>而完成与各个操作系统不同 I/O 操作的则是通过一个库 Libuv 来实现. 网上很多资料说是 Libuv 提供线程池(thread poll)来实现 Node 的高并发, 其实这个观点是错误的.</p>
+<blockquote>
+<p>Libuv by default creates a thread pool with four threads to offload asynchronous work to. Today’s operating systems already provide asynchronous interfaces for many I/O tasks (<a href="http://man7.org/linux/man-pages/man7/aio.7.html" target="_blank" rel="noopener">e.g. AIO on Linux</a>). Whenever possible, libuv will use those asynchronous interfaces, avoiding usage of the thread pool. The same applies to third party subsystems like databases. Here the authors of the driver will rather use the asynchronous interface than utilizing a thread pool. In short: Only if there is no other way, the thread pool will be used for asynchronous I/O.</p>
+<p>–来自<a href="https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c" target="_blank" rel="noopener">What you should know to really understand the Node.js Event Loop</a></p>
+</blockquote>
+<p>Libuv 确实拥有四条线程来作为线程池供给 Node 使用, 但是如今的操作系统性能已经很优越了, 为何不直接利用操作系统去执行动作, 然后返回对应数据呢?</p>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><h4 id="什么才算是事件"><a href="#什么才算是事件" class="headerlink" title="什么才算是事件?"></a>什么才算是事件?</h4><p>在可交互的用户页面上, 用户产生的一系列事件, 包括单击按钮等事件. 然后对于 Ajax 异步操作而言, 请求动作不是加入事件的标志, 请求完成这一事件才会算成事件并加入队列</p>
+<h4 id="Node-中的事件循环"><a href="#Node-中的事件循环" class="headerlink" title="Node 中的事件循环"></a>Node 中的事件循环</h4><p>首先, 事件循环和用户代码区是处于同一个线程, 而且就只有这一个线程. 而不是如网上一些言论说, 主线线程和事件循环线程这一说法.</p>
+<blockquote>
+<p>There is only one thread that executes JavaScript code and this is the thread where the event loop is running. The execution of callbacks (know that every userland code in a running Node.js application is a callback) is done by the event loop. We will cover that in depth a bit later.</p>
+</blockquote>
+<p>其次是事件循环式栈结构或者队列结构, 对, 但也不全对. 事实上, 是每一个阶段才会呈现队列结构.</p>
+<blockquote>
+<p>While there are queue-like structures involved, the event loop does not run through and process a stack. The event loop as a process is a set of phases with specific tasks that are processed in a round-robin manner.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426012109.png" alt=""></p>
+<p>整个循环过程分为五大部分:</p>
+<p>假设事件循环进入某个阶段, 即使在这期间其他队列中的时间就绪, 也会先将当前阶段队列里的全部回调方法执行完毕后, 再进入到下个阶段</p>
+<p><strong>Timers</strong></p>
+<p>Everything that was scheduled via <code>setTimeout()</code> or <code>setInterval()</code> will be processed here.</p>
+<blockquote>
+<p>用来处理<code>setTimeout()</code> 和<code>setInterval()</code>的回调</p>
+</blockquote>
+<p><strong>IO Callbacks</strong></p>
+<p>Here most of the callbacks will be processed. As all userland code in Node.js is basically in callbacks (e.g a callback to an incoming <code>http</code> request triggers a cascade of callbacks), this is the userland code.</p>
+<blockquote>
+<p>该阶段只是用来执行 pending callback, 例如出现跨域问题的时候, window 会直接报错, 其他系统如 unix 可能会继续等待, 那么这时候就会继续保持在队列中</p>
+</blockquote>
+<p><strong>IO Polling</strong></p>
+<p>Polls for new events to be processed on the next run.</p>
+<blockquote>
+<p>几乎绝大多数的回调函数会在这个阶段执行.</p>
+<p>主要有两个步骤要做:</p>
+<p>(1) 如果有到期的定时器, 那么就执行定时器的回调方法</p>
+<p>(2) 处理本阶段队列中的回调函数</p>
+</blockquote>
+<p><strong>Set Immediate</strong></p>
+<p>Runs all callbacks registered via <code>setImmediate()</code>.</p>
+<blockquote>
+<p><code>setImmediate()</code>等同于一个 Hook 函数</p>
+</blockquote>
+<p><strong>Close</strong></p>
+<p>Here all on(‘close’) event callbacks are processed.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/myBlog.github.io/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+              <a href="/myBlog.github.io/tags/Node/" rel="tag"><i class="fa fa-tag"></i> Node</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog.github.io/2020/04/18/this/" rel="prev" title="this in JavaScript">
+      <i class="fa fa-chevron-left"></i> this in JavaScript
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-是什么"><span class="nav-number">1.2.</span> <span class="nav-text">Node 是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回调函数-callback-function"><span class="nav-number">1.3.</span> <span class="nav-text">回调函数(callback function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.4.</span> <span class="nav-text">进程与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程-process"><span class="nav-number">1.4.1.</span> <span class="nav-text">进程(process)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程-thread"><span class="nav-number">1.4.2.</span> <span class="nav-text">线程(thread)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行与并发"><span class="nav-number">1.5.</span> <span class="nav-text">并行与并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞型-I-O-和非阻塞性-I-O"><span class="nav-number">1.6.</span> <span class="nav-text">阻塞型 I&#x2F;O 和非阻塞性 I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件循环"><span class="nav-number">1.7.</span> <span class="nav-text">事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么才算是事件"><span class="nav-number">1.7.1.</span> <span class="nav-text">什么才算是事件?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-中的事件循环"><span class="nav-number">1.7.2.</span> <span class="nav-text">Node 中的事件循环</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FgSurewin"
+      src="/myBlog.github.io/images/center.jpg">
+  <p class="site-author-name" itemprop="name">FgSurewin</p>
+  <div class="site-description" itemprop="description">life is worthless</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myBlog.github.io/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/myBlog.github.io/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myBlog.github.io/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/FgSurewin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;FgSurewin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Mrliu3244794@gmail.com" title="E-Mail → mailto:Mrliu3244794@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="/myBlog.github.io/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FgSurewin</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myBlog.github.io/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myBlog.github.io/js/utils.js"></script>
+
+<script src="/myBlog.github.io/js/motion.js"></script>
+
+
+<script src="/myBlog.github.io/js/schemes/muse.js"></script>
+
+
+<script src="/myBlog.github.io/js/next-boot.js"></script>
+
+<script src="/myBlog.github.io/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/myBlog.github.io/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Iv3Szu1H8nfuR7V8SH54pjaV-9Nh9j0Va',
+      appKey     : 'OUexH0uEfuN5pTWoCAx8jdfK',
+      placeholder: "Make a comment",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'en' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.5/lib/darkmode-js.min.js"></script>
+		<script>
+			var options = {
+				bottom: '32px', // default: '32px'
+				right: '32px', // default: '32px'
+				left: 'unset', // default: 'unset'
+				time: '0.5s', // default: '0.3s'
+				mixColor: '#fff', // default: '#fff'
+				backgroundColor: '#fff', // default: '#fff'
+				buttonColorDark: '#100f2c', // default: '#100f2c'
+				buttonColorLight: '#fff', // default: '#fff'
+				saveInCookies: true, // default: true,
+				label: '🌓', // default: ''
+				autoMatchOsTheme: true, // default: true
+			};
+
+			const darkmode = new Darkmode(options);
+			darkmode.showWidget();
+		</script>
+		<style>
+button.darkmode-toggle {
+  z-index: 9999;
+}
+img, .darkmode-ignore {
+  isolation: isolate;
+  display: block;
+}
+</style>
+</body>
+</html>

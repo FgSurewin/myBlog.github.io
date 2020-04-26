@@ -1,6 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Node-Part I</title>
+    <url>/myBlog.github.io/2020/04/26/Node/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/Node1.png" alt=""></p>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>为了了解更多网络请求相关的知识, 决定学习一门后端的语言来实现前后数据的交互练习, 感受下那个过程. 而 Node.js 作为 JS 同源的产物, 当然是第一选择.</p>
+<p>本以为会是轻车熟路的快速掌握, 谁知道在了解背景的时候就出现了各种专业名词的冲击. 为了更好的梳理一下自身的思路, 决定从背景知识开始整理.</p>
+<a id="more"></a>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p><strong>What is Node.js?</strong></p>
+<ul>
+<li>Node.js is a JavaScript runtime environment built on Chrome’s V8 JavaScript engine.</li>
+<li>Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.</li>
+<li>Node package ecosystem (npm) is the largest ecosystem of open source libraries in the entire world.</li>
+</ul>
+<p><strong>单线程如何实现非阻塞 I/O 和高并发?</strong></p>
+<p><strong>Node 的事件循环是什么?</strong></p>
+<h3 id="Node-是什么"><a href="#Node-是什么" class="headerlink" title="Node 是什么?"></a>Node 是什么?</h3><p>Node 是一个 JavaScript(严格来说是 ECMAScript)的 runtime, 可以将其想成一种编程语言的运行环境. 正如 Java 需要 JVM 一样.</p>
+<p>Node 的底层是使用 C++实现的, 语法则是遵循 ECMAScript 的规范.</p>
+<h3 id="回调函数-callback-function"><a href="#回调函数-callback-function" class="headerlink" title="回调函数(callback function)"></a>回调函数(callback function)</h3><p>回调函数在 Node 中出现的频率很高, 其实不管是 Node 还是现在主流的前端的框架, 使用回调函数已经是常态了.</p>
+<blockquote>
+<p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, a <strong>callback</strong>, also known as a “<strong>call-after</strong>“<a href="https://en.wikipedia.org/wiki/Callback_(computer_programming)#cite_note-1" target="_blank" rel="noopener">[1]</a> <strong>function</strong>, is any <a href="https://en.wikipedia.org/wiki/Executable_code" target="_blank" rel="noopener">executable code</a> that is passed as an <a href="https://en.wikipedia.org/wiki/Argument_(computer_science)" target="_blank" rel="noopener">argument</a> to other code; that other code is expected to <em>call back</em> (execute) the argument at a given time. This execution may be immediate as in a <strong>synchronous callback</strong>, or it might happen at a later time as in an <strong>asynchronous callback</strong>. –Wikipedia</p>
+</blockquote>
+<p>抛去那些操作系统的底层操作, 也不管异步还是同步, 我们可以简单理解回调函数就是将一个函数作为参数传入另外一个函数.</p>
+<p>根据维基百科的信息, 我们可以知道两个关键信息:</p>
+<ul>
+<li>回调函数存在于同步(synchronous)和异步(asynchronous)中, 不要认为回调一定是异步.</li>
+<li>executable code 是作为回调函数的关键 =&gt; 决定什么时候使用回调函数</li>
+</ul>
+<p>回调函数其实就是一个需要执行的代码块, 不管是异步还是同步, 当你需要执行该段代码块时你就可以考虑将其包装成为一个函数, 然后传入另外一个函数作为回调函数.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426000516.png" alt=""></p>
+<h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>简单而言, 进程是由多个线程组成的</p>
+<h4 id="进程-process"><a href="#进程-process" class="headerlink" title="进程(process)"></a>进程(process)</h4><blockquote>
+<p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位</p>
+</blockquote>
+<p>每一个程序的启动, 都会涉及数据的交互, 这时候操作系统会分配合适的空间来运行该程序.</p>
+<h4 id="线程-thread"><a href="#线程-thread" class="headerlink" title="线程(thread)"></a>线程(thread)</h4><p>在一个进程中, 为了有有效的利用该进程的效能, 可以分配多线程来提高运行性能.</p>
+<blockquote>
+<p>可以将进程比喻成一个工厂, 那么每条流水线则是多线程.</p>
+</blockquote>
+<h3 id="并行与并发"><a href="#并行与并发" class="headerlink" title="并行与并发"></a>并行与并发</h3><blockquote>
+<p>并行(parallel)与并发(concurrent)是两个很常见的概念, 两者虽然中文译名相似, 但实质上差别很大</p>
+</blockquote>
+<p><strong>在我看来, 并发是一种程序设计执行模式, 后并行则是程序执行状态.</strong></p>
+<p>举个例子, 假设我们去排队买火车票, 整个火车站只有一个工作人员, 但是有三个窗口, 三条长队. 每一次工作人员执行完一个窗口就会去下一个窗口. 这种情况就是并发.</p>
+<p>通俗而言, 多线程是实现并发一种方式之一. 我们回到问题, 我们以工作人员为工作的核心, 也就是我们的电脑的 CPU, 假设只有单核(一个工作人员), 并发则可以最大化的利用这个内核去完成(虽然比喻看上去, 换来换去没有什么速度提升, 但是实际上 CPU 的运行速度很快, 而且 CPU 本身有自己一套的选择任务和执行任务的规则, 当线程增加的时候, 可以看到内核的负荷会提高, 执行速度会加快.)</p>
+<p>那么并行则是增加工作人员, 也就是增加内核. 工作人员越多, 当然速度就会越快了. 所以我们看到并行其实也是并发这种设计模式中的一个子集, 本质上也是在想方设法地提高程序的运行效率, 但是选择的方向不同, 行为不同而已.</p>
+<h3 id="阻塞型-I-O-和非阻塞性-I-O"><a href="#阻塞型-I-O-和非阻塞性-I-O" class="headerlink" title="阻塞型 I/O 和非阻塞性 I/O"></a>阻塞型 I/O 和非阻塞性 I/O</h3><p>non-blocking I/O(非阻塞 I/O)是了解 Node 的关键, 也是 Node 的特色之一.</p>
+<p>首先要明白 I/O 就是 input/output, 通常指的是操作系统级别的 I/O, 例如读取磁盘数据</p>
+<p><strong>阻塞 I/O:</strong></p>
+<p>正如字面而言, 是阻塞的. 假设程序需要想读取磁盘的信息, 那么就整个程序就会暂停下来(虽然很短), 等信息获取完毕之后就会执行后面的任务.</p>
+<p><strong>非阻塞 I/O:</strong></p>
+<p>非阻塞 I/O 则是与阻塞相反, 当需要读取磁盘信息的时候, 会执行一个回调函数, 然后继续执行后面的代码. 注意, 以上的说法只是从宏观上去大致理解非阻塞 I/O 的含义, 对于 Node 而言, 情况会有点不同.</p>
+<p>也正是因为情况不同才会引出一个问题: 单线程怎么实现非阻塞 I/O?</p>
+<p>根据官方的解释是, Node 会利用操作系统自身的多线程来完成高并发的非阻塞 I/O</p>
+<blockquote>
+<p>Since most modern <strong>kernels</strong> are multi-threaded, they can handle multiple operations executing in the background. When one of these operations completes, the kernel tells Node.js so that the appropriate callback may be added to the <strong>poll</strong> queue to eventually be executed.</p>
+</blockquote>
+<p>而完成与各个操作系统不同 I/O 操作的则是通过一个库 Libuv 来实现. 网上很多资料说是 Libuv 提供线程池(thread poll)来实现 Node 的高并发, 其实这个观点是错误的.</p>
+<blockquote>
+<p>Libuv by default creates a thread pool with four threads to offload asynchronous work to. Today’s operating systems already provide asynchronous interfaces for many I/O tasks (<a href="http://man7.org/linux/man-pages/man7/aio.7.html" target="_blank" rel="noopener">e.g. AIO on Linux</a>). Whenever possible, libuv will use those asynchronous interfaces, avoiding usage of the thread pool. The same applies to third party subsystems like databases. Here the authors of the driver will rather use the asynchronous interface than utilizing a thread pool. In short: Only if there is no other way, the thread pool will be used for asynchronous I/O.</p>
+<p>–来自<a href="https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c" target="_blank" rel="noopener">What you should know to really understand the Node.js Event Loop</a></p>
+</blockquote>
+<p>Libuv 确实拥有四条线程来作为线程池供给 Node 使用, 但是如今的操作系统性能已经很优越了, 为何不直接利用操作系统去执行动作, 然后返回对应数据呢?</p>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><h4 id="什么才算是事件"><a href="#什么才算是事件" class="headerlink" title="什么才算是事件?"></a>什么才算是事件?</h4><p>在可交互的用户页面上, 用户产生的一系列事件, 包括单击按钮等事件. 然后对于 Ajax 异步操作而言, 请求动作不是加入事件的标志, 请求完成这一事件才会算成事件并加入队列</p>
+<h4 id="Node-中的事件循环"><a href="#Node-中的事件循环" class="headerlink" title="Node 中的事件循环"></a>Node 中的事件循环</h4><p>首先, 事件循环和用户代码区是处于同一个线程, 而且就只有这一个线程. 而不是如网上一些言论说, 主线线程和事件循环线程这一说法.</p>
+<blockquote>
+<p>There is only one thread that executes JavaScript code and this is the thread where the event loop is running. The execution of callbacks (know that every userland code in a running Node.js application is a callback) is done by the event loop. We will cover that in depth a bit later.</p>
+</blockquote>
+<p>其次是事件循环式栈结构或者队列结构, 对, 但也不全对. 事实上, 是每一个阶段才会呈现队列结构.</p>
+<blockquote>
+<p>While there are queue-like structures involved, the event loop does not run through and process a stack. The event loop as a process is a set of phases with specific tasks that are processed in a round-robin manner.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/20200426012109.png" alt=""></p>
+<p>整个循环过程分为五大部分:</p>
+<p>假设事件循环进入某个阶段, 即使在这期间其他队列中的时间就绪, 也会先将当前阶段队列里的全部回调方法执行完毕后, 再进入到下个阶段</p>
+<p><strong>Timers</strong></p>
+<p>Everything that was scheduled via <code>setTimeout()</code> or <code>setInterval()</code> will be processed here.</p>
+<blockquote>
+<p>用来处理<code>setTimeout()</code> 和<code>setInterval()</code>的回调</p>
+</blockquote>
+<p><strong>IO Callbacks</strong></p>
+<p>Here most of the callbacks will be processed. As all userland code in Node.js is basically in callbacks (e.g a callback to an incoming <code>http</code> request triggers a cascade of callbacks), this is the userland code.</p>
+<blockquote>
+<p>该阶段只是用来执行 pending callback, 例如出现跨域问题的时候, window 会直接报错, 其他系统如 unix 可能会继续等待, 那么这时候就会继续保持在队列中</p>
+</blockquote>
+<p><strong>IO Polling</strong></p>
+<p>Polls for new events to be processed on the next run.</p>
+<blockquote>
+<p>几乎绝大多数的回调函数会在这个阶段执行.</p>
+<p>主要有两个步骤要做:</p>
+<p>(1) 如果有到期的定时器, 那么就执行定时器的回调方法</p>
+<p>(2) 处理本阶段队列中的回调函数</p>
+</blockquote>
+<p><strong>Set Immediate</strong></p>
+<p>Runs all callbacks registered via <code>setImmediate()</code>.</p>
+<blockquote>
+<p><code>setImmediate()</code>等同于一个 Hook 函数</p>
+</blockquote>
+<p><strong>Close</strong></p>
+<p>Here all on(‘close’) event callbacks are processed.</p>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Node</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>this in JavaScript</title>
     <url>/myBlog.github.io/2020/04/18/this/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/this.png" alt=""></p>
