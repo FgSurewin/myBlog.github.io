@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>The Pointer And Class in C++</title>
+    <url>/myBlog.github.io/2020/05/11/cpp/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/c++.png" alt=""></p>
+<p>不同的语言, 不同语法, 太容易混乱了. 基于此特意写下自己容易疑惑的几个点.</p>
+<a id="more"></a>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>&amp; 的两种意思</p>
+<ul>
+<li>声明地址的操作符</li>
+<li>声明引用的操作符</li>
+</ul>
+<blockquote>
+<p>引用的意思是指 alias, 仅仅是一个别名, 但共同使用同一个地址</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 常见的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> &amp; num2 = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数的引用参数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">increase</span> <span class="params">(<span class="keyword">int</span> &amp; x)</span></span>&#123;</span><br><span class="line">    x++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当参数传进去之后就不需要return,也不需要新的一个变量也存储值</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Pointer"><a href="#Pointer" class="headerlink" title="Pointer"></a>Pointer</h2><p>“*“ 的两种意思</p>
+<ul>
+<li>声明指针的操作符</li>
+<li>dereference 的作用</li>
+</ul>
+<p>数组的奥秘</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; *arr &lt;&lt; <span class="built_in">endl</span> ;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; arr &lt;&lt; <span class="built_in">endl</span> ;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; *(arr+<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span> ;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; (arr+<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span> ;</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">0x7ffd04bd1350</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">0x7ffd04bd1358</span></span><br></pre></td></tr></table></figure>
+
+<p>数组的中变量实际上是存放着第一个项的地址, 由于是用<code>int</code>去定义的, 所以每次加 1 都会加 4 个 bit 从而形成新的地址</p>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>大体思想与 Java 相同, 但是应该注意以下问题</p>
+<ul>
+<li>顺序问题</li>
+<li>变量权限问题</li>
+<li>声明 method 的方式<ul>
+<li>内部声明</li>
+<li>外部声明</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在C++中, class思想没有Java的浓重</span></span><br><span class="line"><span class="comment">// 在Java中, 每一个代码块都应该是class中的内容</span></span><br><span class="line"><span class="comment">// 所以main的主方法可以是class中的其中方法之一</span></span><br><span class="line"><span class="comment">// 意思是前后顺序可以不一样</span></span><br><span class="line"><span class="comment">// 但是在C++中, class必须要在main方法前声明</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> number</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Test test;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个不同点在于Class中的field是默认private</span></span><br><span class="line"><span class="comment">// 如上面number为例, 则是private</span></span><br></pre></td></tr></table></figure>
+
+<p>声明方式</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 内部声明</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Patient</span>&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> fname, mname, lname;</span><br><span class="line">    <span class="built_in">string</span> address, city, state;</span><br><span class="line">    <span class="keyword">int</span> ZIP, number, emNumber;</span><br><span class="line">    <span class="built_in">string</span> emName;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Patient Name: "</span></span><br><span class="line">           &lt;&lt; fname &lt;&lt; <span class="string">" "</span> &lt;&lt; mname &lt;&lt; <span class="string">" "</span> &lt;&lt; lname &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Address: "</span> &lt;&lt; address &lt;&lt; <span class="string">", "</span></span><br><span class="line">           &lt;&lt; city &lt;&lt; <span class="string">", "</span> &lt;&lt; state &lt;&lt; <span class="string">", "</span> &lt;&lt; ZIP &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Emergency Contact: "</span> &lt;&lt; emName &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Emergency Number: "</span> &lt;&lt; emNumber;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 外部声明</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Patient</span>&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> fname, mname, lname;</span><br><span class="line">    <span class="built_in">string</span> address, city, state;</span><br><span class="line">    <span class="keyword">int</span> ZIP, number, emNumber;</span><br><span class="line">    <span class="built_in">string</span> emName;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">void</span> Patient:: toString()&#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">"Patient Name: "</span></span><br><span class="line">           &lt;&lt; fname &lt;&lt; <span class="string">" "</span> &lt;&lt; mname &lt;&lt; <span class="string">" "</span> &lt;&lt; lname &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Address: "</span> &lt;&lt; address &lt;&lt; <span class="string">", "</span></span><br><span class="line">           &lt;&lt; city &lt;&lt; <span class="string">", "</span> &lt;&lt; state &lt;&lt; <span class="string">", "</span> &lt;&lt; ZIP &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Emergency Contact: "</span> &lt;&lt; emName &lt;&lt; <span class="built_in">endl</span></span><br><span class="line">           &lt;&lt; <span class="string">"Emergency Number: "</span> &lt;&lt; emNumber;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Derivative</title>
     <url>/myBlog.github.io/2020/05/07/derivative/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/derivative.png" alt=""></p>
