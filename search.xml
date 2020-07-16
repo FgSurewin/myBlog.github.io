@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>RegExp</title>
+    <url>/myBlog.github.io/2020/07/15/RegExp/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgRegExp.png" alt=""></p>
+<p>正则表达式是处理字符串的有效手段之一.</p>
+<p>详细可以参考<a href="https://www.runoob.com/jsref/jsref-obj-regexp.html" target="_blank" rel="noopener">菜鸟教程</a></p>
+<a id="more"></a>
+
+<h2 id="一-正则表达式的声明方式"><a href="#一-正则表达式的声明方式" class="headerlink" title="一/ 正则表达式的声明方式"></a>一/ 正则表达式的声明方式</h2><p>正则表达式有两种方法:</p>
+<ul>
+<li><p>利用<code>new RegExp()</code>去创建</p>
+</li>
+<li><p>直接使用<code>const reg = /../</code>创建</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 日常而言, 直接使用/../来创建是常见的</span></span><br><span class="line"><span class="comment">// 但是当我们的正则为一个变量的时候, 我就需要用new RegExp</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">"^Surewin+"</span>;</span><br><span class="line"><span class="keyword">const</span> reg1 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(str);</span><br><span class="line"><span class="keyword">const</span> reg2 = <span class="regexp">/^Surewin+/</span>;</span><br><span class="line"><span class="comment">// 上面两者的正则都是一致的</span></span><br></pre></td></tr></table></figure>
+
+<p>关于添加的修饰符</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">"^Surewin+"</span>;</span><br><span class="line"><span class="keyword">const</span> reg1 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(str, <span class="string">"g"</span>);</span><br><span class="line"><span class="keyword">const</span> reg2 = <span class="regexp">/^Surewin+/g</span>;</span><br><span class="line"><span class="comment">// 使用RegExp则需要添加第二个参数</span></span><br><span class="line"><span class="comment">// 如果使用简单版直接在末尾加入即可</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二-正则表达式中常用的四种方法"><a href="#二-正则表达式中常用的四种方法" class="headerlink" title="二/ 正则表达式中常用的四种方法"></a>二/ 正则表达式中常用的四种方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这两种是正则作为启动方, 代检测的作为参数</span></span><br><span class="line"><span class="comment">// (1) test() 用于判断true还是false</span></span><br><span class="line"><span class="comment">// reg是启动方, 待测字符串为参数</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/^Surewin+/</span>;</span><br><span class="line">reg.test(<span class="string">"sdf123"</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// (2) exec()</span></span><br><span class="line"><span class="comment">// exec与match一样, 但是运用方式不一样</span></span><br><span class="line"><span class="keyword">const</span> str1 = <span class="string">"I love this lovely girl"</span>;</span><br><span class="line"><span class="keyword">const</span> reg1 = <span class="regexp">/love\w*/</span>;</span><br><span class="line">reg1.match(str1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后面两种都是待检测的作为启动方, 正则作为参数</span></span><br><span class="line"><span class="comment">// (3) match()</span></span><br><span class="line"><span class="comment">// match通常会返回第一个满足要求的内容</span></span><br><span class="line"><span class="keyword">const</span> str1 = <span class="string">"I love this lovely girl"</span>;</span><br><span class="line"><span class="keyword">const</span> reg1 = <span class="regexp">/love\w*/</span>;</span><br><span class="line">str1.match(reg1);</span><br><span class="line"><span class="comment">// 返回的值包括内容, index number和整个检测内容</span></span><br><span class="line"><span class="comment">// ["love", index: 2, input: "I love this lovely girl", groups: undefined].</span></span><br><span class="line"><span class="comment">// 当我们添加修饰符g则可以全局搜寻</span></span><br><span class="line"><span class="keyword">const</span> str2 = <span class="string">"I love this lovely girl"</span>;</span><br><span class="line"><span class="keyword">const</span> reg2 = <span class="regexp">/love\w*/g</span>;</span><br><span class="line">str2.match(reg2);</span><br><span class="line"><span class="comment">// 返回的值</span></span><br><span class="line"><span class="comment">// ["love", "lovely"]</span></span><br><span class="line"><span class="comment">// 需要注意的是, 如果没有满足要求的内容则返回null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// (4) search()</span></span><br><span class="line"><span class="comment">// search只能找到第一个匹配项, 不管你有没有全局g修饰符</span></span><br><span class="line"><span class="comment">// 而且返回的仅仅是一个index而已</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受两个字符串作为参数</span></span><br><span class="line"><span class="comment">// (5) replace()</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">"avb23"</span>;</span><br><span class="line"><span class="keyword">const</span> result = str.replace(<span class="string">"v"</span>, <span class="string">"@"</span>); <span class="comment">// result = a@b23</span></span><br></pre></td></tr></table></figure>
+
+<p>方法的选择和使用取决于你的需求. 当我们进行一些格式的验证, 比如邮箱格式验证的时候, 我们只需要使用<code>test()</code>方法即可. 所以使用场景大致分成三个部分:</p>
+<ul>
+<li>判断是否匹配要求: 使用<code>test()</code>或者<code>search()</code></li>
+<li>如果需要匹配相应的内容, 则需要使用<code>match()</code>或者<code>exec()</code>, 两者的区别是后者是有状态的, 可以使用循环体并保存状态, 而前者<code>match()</code>则是仅仅一次匹配</li>
+<li><code>replace()</code>则是需要替换的时候使用</li>
+</ul>
+<h2 id="三-常用的修饰符"><a href="#三-常用的修饰符" class="headerlink" title="三/ 常用的修饰符"></a>三/ 常用的修饰符</h2><ul>
+<li><code>g</code>表示全局修饰符</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设我们需要匹配一个数组中所有的数字</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">"abc45"</span>;</span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\d/g</span>;</span><br><span class="line"><span class="keyword">const</span> result = str.match(reg);</span><br><span class="line"><span class="comment">// 如果没加g, 则只会匹配到第一个满足要求的内容即会停下</span></span><br><span class="line"><span class="comment">// 有全局修饰符g的话, 则会返回所有满足要求的内容</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>i</code>表示检验规则内大小写不敏感</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">"love"</span>;</span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/LOVE/i</span>;</span><br><span class="line"><span class="keyword">const</span> result = reg.test(str);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>\d</code> 表示匹配数字 0 到 9, 相反<code>\D</code>匹配除数字以外</li>
+<li><code>\s</code> 表示匹配 space 空格, 相反<code>\S</code>匹配除空格以外</li>
+<li><code>\w</code> 表示[0-9a-zA-z], 相反<code>\W</code>表示前者以外的字符</li>
+</ul>
+<h2 id="四-易错点"><a href="#四-易错点" class="headerlink" title="四/ 易错点"></a>四/ 易错点</h2><ul>
+<li>三个不同类型的括号的意思是不同的</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ()表示一个组</span></span><br><span class="line"><span class="comment">// 使用()进行分组的时候, 切记不要为了格式好看, 加入空格, 如(se | set). 空格也会被当成规则一部分.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// []表示单个匹配</span></span><br><span class="line"><span class="comment">// 比如[a-z]则是匹配一个小写字母</span></span><br><span class="line"><span class="comment">// [a-zA-Z1-9]则是相当于\w</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;&#125;表示范围</span></span><br><span class="line"><span class="comment">// 举个例子</span></span><br><span class="line"><span class="comment">// (ab)&#123;2 , 6&#125; 表示待检测的字符串中需要含括ab两个字母(连起来), 2次和6次这个区间都是正确的</span></span><br></pre></td></tr></table></figure>
+
+<p>括号表示捕获组(capturing group), 表示将规则放置与一个组别中.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设要写一个正则匹配时间的格式 : 12:56</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/([01]\d|2[0-3]):[0-5]\d/</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这时候, 括号就是很关键的一步了, 表示将前面的部分分成两个不同的可能. 除了分组这一个特点外, 还有一个很有意思的功能就是配合<code>exec</code>或者<code>match</code>一同使用.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设我们需要从cookie中提取出我们所需的session_id</span></span><br><span class="line"><span class="comment">// 假设我们设置都格式都是: sid=value</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/^sid=(.*)$/</span>s;</span><br><span class="line"><span class="keyword">const</span> result = reg.exec(reg);</span><br><span class="line"><span class="comment">// 这时候会返回一个数组, 其中第二位(index : 1)则是括号中的内容</span></span><br><span class="line"><span class="comment">// 这就是括号的第二个特性, 当出现括号时, 使用match或者exec等方法会将括号的内容一个一个按顺序打出.</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>[^abc]</code>表示除去 abc 外的字符都能匹配</p>
+</li>
+<li><p><code>.</code>点号能匹配所有字符, 除了换行符<code>\n</code>, 但是当我们使用 s 修饰符的时候<code>./s</code>, 就能实现全字符匹配了.</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>RegExp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>The Pointer And Class in C++</title>
     <url>/myBlog.github.io/2020/05/11/cpp/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img/c++.png" alt=""></p>
