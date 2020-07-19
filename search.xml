@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>sass</title>
+    <title>First glimpse on Sass</title>
     <url>/myBlog.github.io/2020/07/18/sass/</url>
     <content><![CDATA[<p><img src="https://miro.medium.com/max/683/1*HFYKWq92BcXJIdata7d-JQ.png" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习 Sass 是为了更好的学习模块化的思想, 其实认真去考虑一个问题, 为什么要重复的写一些没用的代码? 不如老老实实学习一下怎么简单的封装一些东西, 让自己在这几天学习的过程中收获一些东西(例如设计技巧)</p>
