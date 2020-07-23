@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myBlog.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myBlog.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myBlog.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myBlog.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myBlog.github.io/css/main.css">
+
+
+<link rel="stylesheet" href="/myBlog.github.io/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/myBlog.github.io/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myBlog.github.io/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fgsurewin.github.io","root":"/myBlog.github.io/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言这是一篇时长时短的学习笔记, 有些段落很啰嗦, 有些却又很简短. 整个笔记完成间隔比较久. 主要是因为懒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Koa">
+<meta property="og:url" content="https://fgsurewin.github.io/myBlog.github.io/2020/07/22/Koa/index.html">
+<meta property="og:site_name" content="清茶、淡飯">
+<meta property="og:description" content="前言这是一篇时长时短的学习笔记, 有些段落很啰嗦, 有些却又很简短. 整个笔记完成间隔比较久. 主要是因为懒">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgkoa.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img20200713154907.png">
+<meta property="article:published_time" content="2020-07-23T03:21:27.000Z">
+<meta property="article:modified_time" content="2020-07-23T03:28:28.675Z">
+<meta property="article:author" content="FgSurewin">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Koa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgkoa.png">
+
+<link rel="canonical" href="https://fgsurewin.github.io/myBlog.github.io/2020/07/22/Koa/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Koa | 清茶、淡飯</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myBlog.github.io/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">清茶、淡飯</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">To be a better man</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myBlog.github.io/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myBlog.github.io/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/myBlog.github.io/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myBlog.github.io/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fgsurewin.github.io/myBlog.github.io/2020/07/22/Koa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myBlog.github.io/images/center.jpg">
+      <meta itemprop="name" content="FgSurewin">
+      <meta itemprop="description" content="life is worthless">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清茶、淡飯">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Koa
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-07-22 23:21:27 / Modified: 23:28:28" itemprop="dateCreated datePublished" datetime="2020-07-22T23:21:27-04:00">2020-07-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/myBlog.github.io/categories/programming/" itemprop="url" rel="index"><span itemprop="name">programming</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/myBlog.github.io/2020/07/22/Koa/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/myBlog.github.io/2020/07/22/Koa/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgkoa.png" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是一篇时长时短的学习笔记, 有些段落很啰嗦, 有些却又很简短. 整个笔记完成间隔比较久. 主要是因为懒</p>
+<a id="more"></a>
+
+<h2 id="一-关于服务端编程"><a href="#一-关于服务端编程" class="headerlink" title="一/ 关于服务端编程"></a>一/ 关于服务端编程</h2><p>我们都知道服务器是用于与用户交流. 服务器的本质也是一台电脑, 存储着我们需要和用户分享的资料与信息. 而服务器与用户的交流, 本质就是用户向服务器索取他们所需要的资料, 然后服务器则内部搜寻其本地资料并相应发出. 所以服务端编程需要解决两个核心问题:</p>
+<ol>
+<li>如何合理有效地进行 I/O 操作 (如:读写本地文件等操作)</li>
+<li>如何实现 HTTP 的交互</li>
+</ol>
+<p>基本上能解决以上问题的编程语言都可以作为服务端编程语言的使用. Node 就是其中一个可以实现服务端编程的语言.</p>
+<h2 id="二-Koa"><a href="#二-Koa" class="headerlink" title="二/ Koa"></a>二/ Koa</h2><p>Koa 是基于 Node 而建立的轻型框架. 它的特色是封装了 Node 中的 HTTP 模块. 主要提供了两个创新性的作用点:</p>
+<ul>
+<li>将 request 和 response 封装到 context 中</li>
+<li>独特的中间件运行机制</li>
+</ul>
+<p>同时允许我们可以使用<code>async/await</code>只是更优雅地处理<code>Promise</code>. 我们可以通过<code>koa</code>的设计来获取一些独特的设计模式. 我称之为”规则设计”. 鉴于我的个人比较笨, 在解决问题的时候通常会想到具体的功能该如何实现, 属于”按功能设计”, 其实简单来说就是, 一个令人满意的的程序或者工具, 它所负责的只是为使用者设计合适的边界和规则, 其他让用户自由发挥, 即所谓的<strong>通用性</strong>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 举一个例子来感受一下通用的感觉</span></span><br><span class="line"><span class="comment">// 请将下方 `getAsyncGreaterThanOneNumber` and `main` method 更改成 promise 语法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAsyncGreaterThanOneNumber</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> randomNumber = <span class="built_in">Math</span>.random() * <span class="number">10</span>;</span><br><span class="line">		<span class="keyword">if</span> (randomNumber &lt; <span class="number">1</span>) &#123;</span><br><span class="line">			cb(<span class="string">"less then one"</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		cb(<span class="literal">null</span>, randomNumber);</span><br><span class="line">	&#125;, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	getAsyncGreaterThanOneNumber(<span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="built_in">console</span>.error(err);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">`random number is <span class="subst">$&#123;result&#125;</span>`</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line">main();</span><br><span class="line"><span class="comment">// Promise 语法:</span></span><br><span class="line"><span class="keyword">const</span> promisify = <span class="function">(<span class="params">func</span>) =&gt;</span> <span class="function">(<span class="params">...args</span>) =&gt;</span></span><br><span class="line">	<span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> callback = <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (err) reject(<span class="keyword">new</span> <span class="built_in">Error</span>(err));</span><br><span class="line">			resolve(<span class="string">`random number is <span class="subst">$&#123;result&#125;</span>`</span>);</span><br><span class="line">		&#125;;</span><br><span class="line">		args.push(callback);</span><br><span class="line">		func(callback);</span><br><span class="line">	&#125;);</span><br><span class="line"><span class="keyword">const</span> getAsyncGreaterThanOneNumber = <span class="function">(<span class="params">cb</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> randomNumber = <span class="built_in">Math</span>.random() * <span class="number">10</span>;</span><br><span class="line">		<span class="keyword">if</span> (randomNumber &lt; <span class="number">1</span>) &#123;</span><br><span class="line">			cb(<span class="string">"less then one"</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		cb(<span class="literal">null</span>, randomNumber);</span><br><span class="line">	&#125;, <span class="number">1</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> getAsyncGreaterThanOneNumberWithPromise = promisify(</span><br><span class="line">	getAsyncGreaterThanOneNumber</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">getAsyncGreaterThanOneNumberWithPromise()</span><br><span class="line">	.then(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="built_in">console</span>.log(res))</span><br><span class="line">	.catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.log(err));</span><br></pre></td></tr></table></figure>
+
+<p>通过上述的例子可以大概感受到”规则设计”的魅力. 在<code>promisify</code>函数中, 我们所需要改变的往往只是其中需要调用的<code>callback function</code>. 其他的边界都已经被设定好了.</p>
+<p>“规则设计”的要领是</p>
+<p>其实<code>Koa</code>中的中间件使用也是有异曲同工之妙. 我们所要做的只是编辑不同的中间件. 下面我们按照这个设计规则, 搭建一个简陋的 Koa 应用. 首先我们知道 Koa 的实例中有<code>listen</code>这个方法, 根据官方而言, 他们只是基本封装了原生 node 的<code>http</code>模块.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建我们自己的Koa</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyKoa</span> </span>&#123;</span><br><span class="line">    listen = <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</span><br><span class="line">		server.listen(...args);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 根据我们原生http的了解, 我们知道callback这个函数的形式大概是</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) =&gt; </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实我通过观察 Koa 的中间件原理, 不难发现其中的<code>use</code>方法不过是把每一个中间件放入一个数列中. 为此我们又可以扩展我们的应用.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyKoa</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>() &#123;</span><br><span class="line">		<span class="keyword">this</span>.stack = [];</span><br><span class="line">	&#125;</span><br><span class="line">	use = <span class="function">(<span class="params">middleware</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">this</span>.stack.push(middleware);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	listen = <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</span><br><span class="line">		server.listen(...args);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整个中间件的运作系统就是利用了<code>compose</code>方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// compose.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">return</span> dispatch(<span class="number">0</span>);</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (i &lt; index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"error!"</span>));</span><br><span class="line">			index = i;</span><br><span class="line">			<span class="keyword">let</span> fn = arr[i];</span><br><span class="line">			<span class="keyword">if</span> (i === arr.length) fn = next;</span><br><span class="line">			<span class="comment">// 事实上next为空, 所以可以实现递归的结束</span></span><br><span class="line">			<span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve();</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">// 每一次我们调用await next(), 就是调用dispatch(i + 1)</span></span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(ctx, () =&gt; dispatch(i + <span class="number">1</span>)));</span><br><span class="line">			&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这时候, 我们已经基本可以完善该应用了, 但是只是实现中间件的效果. 我们还需要提供一些函数来封装<code>(req, res)</code>到<code>ctx</code>中. 不仅如此, 我们还需要利用<code>getter/setter</code>来定义<code>ctx.body</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"><span class="keyword">const</span> compose = <span class="built_in">require</span>(<span class="string">"./myCompose"</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通用上下文</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">	_body: <span class="literal">null</span>,</span><br><span class="line"></span><br><span class="line">	<span class="keyword">get</span> body() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>._body;</span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">	<span class="keyword">set</span> body(val) &#123;</span><br><span class="line">		<span class="keyword">this</span>._body = val;</span><br><span class="line">		<span class="keyword">this</span>.res.end(<span class="keyword">this</span>._body);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyKoa</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>() &#123;</span><br><span class="line">		<span class="keyword">this</span>.stack = [];</span><br><span class="line">		<span class="keyword">this</span>.context = <span class="built_in">Object</span>.create(context);</span><br><span class="line">	&#125;</span><br><span class="line">	use = <span class="function">(<span class="params">middleware</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">this</span>.stack.push(middleware);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	callback = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// 将中间件放置于compose中</span></span><br><span class="line">		<span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.stack);</span><br><span class="line">		<span class="comment">// 返回一个适合在原生http中使用的函数</span></span><br><span class="line">		<span class="keyword">return</span> <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 将req和res封装进ctx中</span></span><br><span class="line">			<span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.handleRequest(ctx, fn);</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	handleRequest = <span class="function">(<span class="params">context, func</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// 因为本身(req, res)这个函数也需要请求才会激活</span></span><br><span class="line">		<span class="comment">// promise的方法都需要then来激活</span></span><br><span class="line">		func(context).then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"Your app is running..."</span>));</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	listen = <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</span><br><span class="line">		server.listen(...args);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	createContext(req, res) &#123;</span><br><span class="line">		<span class="keyword">const</span> context = <span class="built_in">Object</span>.create(<span class="keyword">this</span>.context);</span><br><span class="line">		context.app = <span class="keyword">this</span>;</span><br><span class="line">		context.req = req;</span><br><span class="line">		context.res = res;</span><br><span class="line">		context.originalUrl = req.url;</span><br><span class="line">		context.state = &#123;&#125;;</span><br><span class="line">		<span class="keyword">return</span> context;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyKoa;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-静态资源"><a href="#三-静态资源" class="headerlink" title="三/ 静态资源"></a>三/ 静态资源</h2><p><strong>为什么在服务器中的 HTML 关联的 CSS 文件无法自动关联并渲染?</strong></p>
+<p>答: 因为我们正在构建服务端的环境, 每一个 URL 对应的响应内容都需要我们自行设置, 如果不设置就不会呈现出来. 而在 HTML 中的使用 LINK 来引用静态 CSS 文件, 本质上这个 LINK 的 URL 就属于服务器中一个 URL, 如果我们不设置响应, 那么就不会读取该文件(即使我们知道我们已经存储了该文件).</p>
+<p>利用<code>koa-static</code>中间件实现响应静态文件. <code>koa-static</code>需要两个参数, 一个是 root, 一个是 options, 其实<code>koa-static</code>就是一个二次封装<code>koa-send</code>的产物, 所以 options 参数是用于设置<code>koa-send</code>的一些参数. 具体可以详细看<a href="https://github.com/koajs/static" target="_blank" rel="noopener">koa-static 的 GitHub Page</a></p>
+<ul>
+<li><code>koa-static</code>会将接受到 root 参数作为我们 URL 中的主路径(base)</li>
+<li>按照实际情况来用绝对路径或者相对路径(推荐使用绝对路径)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设正在使用localhost:3000作为主路径</span></span><br><span class="line"><span class="comment">// 假设目录结构如下</span></span><br><span class="line">├── static # 静态资源目录</span><br><span class="line">│   ├── css/</span><br><span class="line">│   ├── image/</span><br><span class="line">│   ├── js/</span><br><span class="line">│   └── index.html</span><br><span class="line">├── app.js # 工具代码</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用koa-static</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'koa'</span>)();</span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">'koa-static'</span>)</span><br><span class="line"></span><br><span class="line">app.use(serve(path.join(__dirname, <span class="string">'static'</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 那么查看具体文件就是直接调用相应文件夹即可</span></span><br><span class="line"><span class="comment">// 例如CSS文件 : localhost:3000/css/style.css</span></span><br><span class="line"><span class="comment">// 例如image文件 : localhost:3000/image/0.png</span></span><br></pre></td></tr></table></figure>
+
+<p>我们会发现, 我们并不能够设定独有的路径来显示我们的静态文件. 只能声明我们的静态文件处于哪个文件夹中. 当我们想设定特定的路径的时候, 我们需要安装<code>koa-mount</code>这个包. <a href="https://github.com/koajs/mount" target="_blank" rel="noopener">GitHub 地址</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mount = <span class="built_in">require</span>(<span class="string">"koa-mount"</span>);</span><br><span class="line">app.use(mount(<span class="string">"/hello"</span>, serve(path.join(__dirname, <span class="string">"static"</span>))));</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-路由"><a href="#四-路由" class="headerlink" title="四/ 路由"></a>四/ 路由</h2><p>路由的实现方式和<code>Koa</code>本身也是差不多, 也是使用<code>compose</code>方法对路由进行插入运行. 基本常用属性如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">"koa-router"</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> home = <span class="keyword">new</span> Router();</span><br><span class="line"><span class="keyword">const</span> about = <span class="keyword">new</span> Router();</span><br><span class="line"><span class="keyword">const</span> route = <span class="keyword">new</span> Router();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">	ctx.state.text = <span class="string">"Hi, middleware"</span>;</span><br><span class="line">	<span class="keyword">await</span> next();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">home</span><br><span class="line">	.get(<span class="string">"/home"</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">		ctx.body = <span class="string">"hello home"</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">	.get(<span class="string">"/blog/:id"</span>, middleware, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">		ctx.body = <span class="string">"hello dynamic routes"</span>;</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">about.get(<span class="string">"/about"</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">	ctx.body = <span class="string">"hello about"</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">route.use(<span class="string">"/api"</span>, about.routes(), about.allowedMethods());</span><br><span class="line">route.use(home.routes(), home.allowedMethods());</span><br><span class="line"></span><br><span class="line">app.use(route.routes()).use(route.allowedMethods());</span><br><span class="line">app.listen(<span class="number">3000</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">"Server is running on 3000"</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="五-请求方法"><a href="#五-请求方法" class="headerlink" title="五/ 请求方法"></a>五/ 请求方法</h2><p>我们都知道, 每一次的网页访问都是一个 GET 方法. 所以我们只需要设置相应的路由即可. 我们可以在路径设置<code>params</code>或者<code>query</code>.</p>
+<p>但是当我们需要使用<code>POST</code>方法进行访问时, 我们需要使用<code>koa-bodyparser</code>获得我们想要的内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用非常简单</span></span><br><span class="line"><span class="keyword">const</span> result = ctx.request.body;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六-模板引擎"><a href="#六-模板引擎" class="headerlink" title="六/ 模板引擎"></a>六/ 模板引擎</h2><p>在 Koa 中, 我们使用模板引擎其实是向解决如何想 HTML 文件传送变量的问题. 以<code>nunjucks</code>为例. 我们可以使用该模板引擎进行 HTML 的循环, 变量输入和条件判断.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入方式</span></span><br><span class="line"><span class="comment">// 需要install nunjucks 和 koa-views</span></span><br><span class="line"><span class="keyword">const</span> view = <span class="built_in">require</span>(<span class="string">"koa-views"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line">app.use(view(path.join(__dirname, <span class="string">"/view"</span>), &#123; <span class="attr">map</span>: &#123; <span class="attr">html</span>: nunjucks &#125; &#125;));</span><br><span class="line"><span class="comment">// nunjucks虽然没有直接引入, 但是会调用其引擎的</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="七-Session-Cookies-与-JWT"><a href="#七-Session-Cookies-与-JWT" class="headerlink" title="七/ Session, Cookies 与 JWT"></a>七/ Session, Cookies 与 JWT</h2><p>整个 HTTP 网络的知识是何其庞大, 我想寥寥几句也无法将其说明白. 但是只是按照计算机世界的思维方式去尽量理解每一步的动机和意义. 每当我们查阅关于 session 和 cookie 的资料的时候, 我们都会看到一句话, <strong>HTTP 是无状态(stateless)</strong>. 这满足了 HTTP 的设计初衷, 如同一个派传单的工作人员一样, 不用去理会接收者是谁, 我只会做同一件事, 就是派发传单. 但是我们不应该主观的将 cookie 和 session 绑定与实现登录功能上, 我们可以慢慢地进入设计的思维中.</p>
+<p>无可否认, cookie 和 session 是基于解决 HTTP 无状态的问题而进行讨论的. 然而, 我们对 session 的理解却有点本末倒置了. 当我们查阅维基百科的时候, 我们可以看到<code>Session(会话)</code>是指两个或两个以上正在交流的设备拥有暂时的信息存留的描述. 也就是说<code>Session</code>是有状态的 HTTP 交流的总称. 每一个有状态环境下的交流通讯都可称为<code>Session</code>.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img20200713154907.png" alt=""></p>
+<p>自此, 我们明白<code>Session</code>是一种现象, 是对一类的事物的描述. 而 cookie 则是实现 session 的一种途径之一. 传统的 session 是通过在服务器中建立一个存储 session 信息的地方, 然后每一个访问的用户都会获得一个 cookie, 在这个 cookie 中会包含一个<code>session_id</code>, 然后服务器会通过这个<code>session_id</code>来获取对应的信息.</p>
+<blockquote>
+<p>Cookie 的小知识:</p>
+<ul>
+<li><p><strong>如果 Cookie 不包含到期日期，则可视为会话 Cookie（Session Cookie）</strong>。会话 Cookie 存储在客户端的内存（浏览器占用的内存）中，决不会写入磁盘。当浏览器关闭时，Cookie 将从此永久丢失。</p>
+</li>
+<li><p><strong>如果 Cookie 包含到期日期，则可视为持久性 Cookie，存储在客户端的磁盘中</strong>。在指定的到期日期，Cookie 将从磁盘中删除。</p>
+</li>
+<li><p><strong>客户端请求服务端时，如果客户端的 Cookie 中没有当前会话的 SessionId，则服务端会新分配一个 Session，同时通过算法生成一个唯一的（不重复的）sessionId，并将与该 Session 对应的 SessionId 存到 Cookie 中发回给客户端浏览器。</strong></p>
+</li>
+<li><p>由于大部分的网站在发回 SessionId 时使用了会话 Cookie（即没有设置过期时间），导致该 Cookie 存在客户端内存中，所以关闭浏览器即丢失了 SessionId 信息，再次访问服务端时才找不到对应的 Session，于是才有了“关闭浏览器则 Session 过期”的说法！</p>
+</li>
+<li><p>服务端在保存 Session 时也可以设置该 Session 的过期时间，服务端的 Web 服务容器通常也有一个默认的过期时间。若访问服务器后，保持不关闭浏览器一段时间，超过 Session 过期时间后再次访问，会发现依然 Session 过期找不到了（比如表现为跳转到登录页面），则是“没有关浏览器但 Session 过期了”！</p>
+</li>
+<li><p><strong>当（存放着 SessionId 的）Cookie 和 Session 中两者有任一过期，即宣告会话过期。</strong></p>
+</li>
+</ul>
+</blockquote>
+<p>在 Koa 中, 我们可以使用一个常用的 library =&gt; <code>koa-session</code></p>
+<p>koa-session 的设计可以理解成是 cookie 的加密版, 并不是传统意义上的 session. 传统意义上 session-cookie 组合, 是利用 cookie 存储唯一的 session_id, 每一次的<code>会话</code>都会生成一个仅有的<code>session_id</code>用于甄别不同的用户. 而服务端则是通过该<code>session_id</code>去获取我们之前存好的信息. 然后<code>koa-session</code>是将所有信息都存储在 cookie 中, 所以每次用户访问服务器的时候都能拿到数据.</p>
+<p>koa-session 的使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">"koa-session"</span>);</span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.keys = [<span class="string">"some secret hurr"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> CONFIG = &#123;</span><br><span class="line">	key: <span class="string">"koa.sess"</span> <span class="comment">/** (string) cookie key (default is koa.sess) */</span>,</span><br><span class="line">	<span class="comment">/** (number || 'session') maxAge in ms (default is 1 days) */</span></span><br><span class="line">	<span class="comment">/** 'session' will result in a cookie that expires when session/browser is closed */</span></span><br><span class="line">	<span class="comment">/** Warning: If a session cookie is stolen, this cookie will never expire */</span></span><br><span class="line">	maxAge: <span class="number">86400000</span>,</span><br><span class="line">	autoCommit: <span class="literal">true</span> <span class="comment">/** (boolean) automatically commit headers (default true) */</span>,</span><br><span class="line">	overwrite: <span class="literal">true</span> <span class="comment">/** (boolean) can overwrite or not (default true) */</span>,</span><br><span class="line">	httpOnly: <span class="literal">true</span> <span class="comment">/** (boolean) httpOnly or not (default true) */</span>,</span><br><span class="line">	signed: <span class="literal">true</span> <span class="comment">/** (boolean) signed or not (default true) */</span>,</span><br><span class="line">	rolling: <span class="literal">false</span> <span class="comment">/** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */</span>,</span><br><span class="line">	renew: <span class="literal">false</span> <span class="comment">/** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/</span>,</span><br><span class="line">	secure: <span class="literal">true</span> <span class="comment">/** (boolean) secure cookie*/</span>,</span><br><span class="line">	sameSite: <span class="literal">null</span> <span class="comment">/** (string) session cookie sameSite options (default null, don't set it) */</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.use(session(CONFIG, app));</span><br><span class="line"><span class="comment">// or if you prefer all default config, just use =&gt; app.use(session(app));</span></span><br><span class="line"></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// ignore favicon</span></span><br><span class="line">	<span class="keyword">if</span> (ctx.path === <span class="string">"/favicon.ico"</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">let</span> n = ctx.session.views || <span class="number">0</span>;</span><br><span class="line">	ctx.session.views = ++n;</span><br><span class="line">	ctx.body = n + <span class="string">" views"</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"listening on port 3000"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h3><p>JWT 的<a href="https://jwt.io/introduction/" target="_blank" rel="noopener">官网</a>有详尽的介绍. 简单而言, 其实这个 JWT 和上面<code>koa-session</code>的设计是同出一辙的. 不过只是实现的方式不同. JWT 会将 token 以数据的方式直接发送到用户端中, 这样就能解决一个核心问题. 就是只有浏览器端才能接收 cookie, 如果都是基于 cookie-session 的形式去实现登录的话, 就会有很大的局限性.</p>
+<p>而 JWT 的信息也是基于 base64 的方式去存储在 token 中. 所以用户只要随便打开一个解码 base64 的网站都能查看到内容信息. 但是如果想修改就比较麻烦, 因为 signature 是通过前面 payload 和 header 合并起来, 再加上我们的 secret key 组成一个新的, 基于哈希算法的签名. 更改相对较高.</p>
+<p>在前端中, 一般会将 token 存在 localStorage 中. 当然你还有很多选择, 比如 cookie 或者 sessionStorage 中. 具体取决于你自己的喜好和当时的条件.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware/verifyToken.js</span></span><br><span class="line"><span class="comment">// Format of token</span></span><br><span class="line"><span class="comment">// Authorization : Bearer &lt;access_token&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">	<span class="comment">// Get auth header value</span></span><br><span class="line">	<span class="keyword">const</span> bearerHeader = ctx.header[<span class="string">'authorization'</span>];</span><br><span class="line">	<span class="comment">// Check if bearer is undefined</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> bearerHeader !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">		<span class="keyword">const</span> bearer = bearerHeader.split(<span class="string">' '</span>);</span><br><span class="line">		<span class="built_in">console</span>.log(bearer);</span><br><span class="line">		ctx.token = bearer[<span class="number">1</span>];</span><br><span class="line">		next();</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		ctx.status = <span class="number">403</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">"koa-router"</span>);</span><br><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">"jsonwebtoken"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> route = <span class="keyword">new</span> Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Set secret key</span></span><br><span class="line"><span class="keyword">const</span> secretKey = <span class="string">"secret"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Mock data</span></span><br><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">	email: <span class="string">"jacky@yahoo.com"</span>,</span><br><span class="line">	password: <span class="string">"123456"</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Import middleware</span></span><br><span class="line"><span class="keyword">const</span> verifyToken = <span class="built_in">require</span>(<span class="string">"./middleware/verifyToken"</span>);</span><br><span class="line"></span><br><span class="line">route</span><br><span class="line">	.get(<span class="string">"/"</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">		ctx.body = <span class="string">"hello world"</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">	.get(<span class="string">"/video"</span>, verifyToken, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">		<span class="keyword">const</span> authToken = ctx.token;</span><br><span class="line">		<span class="keyword">let</span> result = <span class="literal">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			result = jwt.verify(authToken, secretKey);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(err.message);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (result) &#123;</span><br><span class="line">			ctx.body = &#123;</span><br><span class="line">				message: <span class="string">"This is video content"</span>,</span><br><span class="line">				result,</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			ctx.body = &#123;</span><br><span class="line">				message: <span class="string">"The token is wrong"</span>,</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">	.get(<span class="string">"/getToken"</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">		jwt.sign(user, secretKey, (err, token) =&gt; &#123;</span><br><span class="line">			<span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">			ctx.body = &#123;</span><br><span class="line">				token,</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">app.use(route.routes()).use(route.allowedMethods());</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">5001</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">"Server is running ..."</span>));</span><br></pre></td></tr></table></figure>
+
+<p>具体 JWT 和 Session 的 demo 的代码可以查看我的 GitHub repo : <a href="https://github.com/FgSurewin/koa-learning/tree/master/sessionAndJwt" target="_blank" rel="noopener">Auth</a></p>
+<h2 id="八-数据持久化"><a href="#八-数据持久化" class="headerlink" title="八/ 数据持久化"></a>八/ 数据持久化</h2><p>直白而言, 数据持久化就是将数据存放在数据库中. 数据库的类型主要分成关系型数据库和非关系型数据库</p>
+<ul>
+<li>RDBM 的代表为: MySQL</li>
+<li>NoSQL 的代表为: MongoDB</li>
+</ul>
+<p>当你选择后端语言为 Node 时, MongoDB 是一种不错的数据库选择. 因为其提供的 JS 写法, 使得与数据库交互的部分也成为了书写 JavaScript 的一部分.</p>
+<p>关系型数据库的优点在于关联, 设计者需要通过实际的需求去设计合适的表格. 设计时需要遵循 Normalization 的原则, 例如同一 column 不能出现多个值, 如出现则应该合理分表. 通过特定的约束使整个数据库的表格变得简约且关联性强.</p>
+<p>使用 Node 作为服务端语言编写的后端环境可以选择使用<code>mysql</code>作为数据库的连接的第三方依赖. 通过依赖我们能够正常使用传统 SQL 语法来与获取数据库信息, 比如<code>select * from .....</code>. 但是如果我想使用关系型数据库如同使用 MongoDB 一样, 我们则需要一个 ORM 来实现.</p>
+<p>ORM(Object-relational mapping)的原理是通过创建相应的对象去映射数据中的每一个表格. 从而实现操作指定对象即可操作数据库.</p>
+<h3 id="Sequelize"><a href="#Sequelize" class="headerlink" title="Sequelize"></a>Sequelize</h3><p><a href="https://sequelize.org/v5/manual/getting-started.html" target="_blank" rel="noopener">Sequelize 官方文档</a></p>
+<p>在 Node 中, 使用 Sequelize 作为 ORM 来操作数据库是一种很合适的方案. 当使用 ORM 时, 我们应该解决如下问题:</p>
+<ul>
+<li>如何连接数据库</li>
+<li>如何利用 Sequelize 提供的 API 实现传统 SQL 语句</li>
+</ul>
+<h4 id="构建连接"><a href="#构建连接" class="headerlink" title="构建连接"></a>构建连接</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">"sequelize"</span>);</span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> Sequelize(<span class="string">"database"</span>, <span class="string">"username"</span>, <span class="string">"password"</span>, &#123;</span><br><span class="line">	host: <span class="string">"localhost"</span>,</span><br><span class="line">	dialect: mysql,</span><br><span class="line">	<span class="comment">// 配置数据池</span></span><br><span class="line">	pool: &#123;</span><br><span class="line">		max: <span class="number">5</span>,</span><br><span class="line">		min: <span class="number">0</span>,</span><br><span class="line">		acquire: <span class="number">30000</span>,</span><br><span class="line">		idle: <span class="number">10000</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 数据库中表格的同步创建, 后文会详细说明</span></span><br><span class="line">db.sync();</span><br><span class="line"><span class="built_in">module</span>.exports = db;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于检测是否数据库是否连接成功</span></span><br><span class="line">db.authenticate()</span><br><span class="line">	.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"Connection has been established successfully."</span>);</span><br><span class="line">	&#125;)</span><br><span class="line">	.catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.error(<span class="string">"Unable to connect to the database:"</span>, err);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建-Models"><a href="#创建-Models" class="headerlink" title="创建 Models"></a>创建 Models</h4><ul>
+<li>基于原有的数据库而创建相应 Models, 从而实现映射</li>
+<li>利用 Sequelize 的同步创建功能, 即数据库中的表格通过 Models 直接创建</li>
+<li>利用 Sequelize-cli 中的 migration 特性</li>
+</ul>
+<h5 id="利用-MySQL-本身建立表格"><a href="#利用-MySQL-本身建立表格" class="headerlink" title="利用 MySQL 本身建立表格"></a>利用 MySQL 本身建立表格</h5><p>建立表格的关键在于如何处理关系型数据库中常见的 Foreign Key 问题. 关系型数据库的特色就是能够利用 Foreign Key 来约束每一个 record 的录入. 所以在 Sequelize 中要解决表格中含有 Foreign Key 的最简单粗暴的方法就是自身先通过 MySQL 本身创建相应的数据库.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用传统的SQL语法创建两个表格</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="string">`users`</span> (</span><br><span class="line">	<span class="string">`id`</span> <span class="built_in">int</span> primary <span class="keyword">key</span> <span class="keyword">not</span> <span class="literal">null</span> auto_increment,</span><br><span class="line">    <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="string">`lists`</span> (</span><br><span class="line">	<span class="string">`list_id`</span> <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span> AUTO_INCREMENT,</span><br><span class="line">   <span class="string">`content`</span> <span class="built_in">text</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">   <span class="string">`userId`</span> <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">	primary <span class="keyword">key</span>(list_id),</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (userId) <span class="keyword">references</span> <span class="keyword">users</span>(<span class="keyword">id</span>)</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+
+<p>然后再根据每一个 column 创建对应 Model, 我们可以不用特意的标注两个表格的关系, 但是当我们读取或者插入数据的时候, 约束条件会自然存在.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于声明数据类型</span></span><br><span class="line"><span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">"sequelize"</span>);</span><br><span class="line"><span class="comment">// db是前文构建数据库连接的时候配置的</span></span><br><span class="line"><span class="keyword">const</span> db = <span class="built_in">require</span>(<span class="string">"./config/database.js"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = db.define(</span><br><span class="line">	<span class="string">"user"</span>,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// attributes</span></span><br><span class="line">		id: &#123;</span><br><span class="line">			type: Sequelize.INTEGER,</span><br><span class="line">			allowNull: <span class="literal">false</span>,</span><br><span class="line">			autoIncrement: <span class="literal">true</span>,</span><br><span class="line">			primaryKey: <span class="literal">true</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		email: &#123;</span><br><span class="line">			type: Sequelize.STRING,</span><br><span class="line">			allowNull: <span class="literal">false</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		password: &#123;</span><br><span class="line">			type: Sequelize.STRING,</span><br><span class="line">			allowNull: <span class="literal">false</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// options</span></span><br><span class="line">		<span class="comment">// 避免创建createdAt和updatedAt这两个columns</span></span><br><span class="line">		timestamps: <span class="literal">false</span>,</span><br><span class="line">	&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>下面开始进行对比学习:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="string">`users`</span> (</span><br><span class="line">	<span class="string">`id`</span> <span class="built_in">int</span> primary <span class="keyword">key</span> <span class="keyword">not</span> <span class="literal">null</span> auto_increment,</span><br><span class="line">    <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment"># primaryKey ===&gt; primary key</span></span><br><span class="line"><span class="comment"># autoIncrement: true ===&gt; auto_increment</span></span><br><span class="line"><span class="comment"># allowNull: false ===&gt; not null</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="利用-Sequelize-的同步功能建立表格"><a href="#利用-Sequelize-的同步功能建立表格" class="headerlink" title="利用 Sequelize 的同步功能建立表格"></a>利用 Sequelize 的同步功能建立表格</h5><p>首先要知道开启同步的功能分为两种:</p>
+<ul>
+<li>整个 Database 开启同步</li>
+<li>单个 Model 开启同步</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 整个Database开启同步的方式很简单, 即在配置连接的文件添加即可</span></span><br><span class="line">...</span><br><span class="line">db.sync();</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 单个Model同理</span></span><br><span class="line">User.sync()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 还有强制同步功能 ==&gt; 即删除原有table而创建新的table</span></span><br><span class="line"><span class="comment">// sync()的功能是如果没有则创建, 如果有则使用原有的table</span></span><br><span class="line"><span class="comment">// 强制同步的语法</span></span><br><span class="line">User.sync(&#123;</span><br><span class="line">    force: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果发现不管使用db.sync()还是User.sync()都没有反应的话</span></span><br><span class="line"><span class="comment">// 是因为版本的更新, 需要我们自行去运行模型建立的初始化</span></span><br><span class="line"><span class="comment">// 解决方法是通过建立一个新的文件, 去完成所有模型的初始化</span></span><br><span class="line"><span class="comment">// -------------------------------</span></span><br><span class="line"><span class="comment">// model/index.js  ==&gt;  整合初始化</span></span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'./user.js'</span>);</span><br><span class="line"><span class="keyword">const</span> Blog = <span class="built_in">require</span>(<span class="string">'./blog.js'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    User.sync();</span><br><span class="line">    User.hasMany();</span><br><span class="line">    Blog.sync();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// -------------------------------</span></span><br><span class="line"><span class="comment">// app.js  主路径下app.js文件调用该方法</span></span><br><span class="line"><span class="keyword">const</span> initModel = <span class="built_in">require</span>(<span class="string">'./model/index.js'</span>)</span><br><span class="line">initModel();</span><br></pre></td></tr></table></figure>
+
+<p>接下来回到问题的根本. 当我们选择使用同步的功能时候, 我们如何实现不同表格之间的关系呢? 答案是 Association. <a href="https://sequelize.org/v5/manual/associations.html" target="_blank" rel="noopener">Sequelize 中关于 Association 的官方文档</a> 中对定义了 4 中关系涵盖了关系型数据库中常见的关系.</p>
+<ol>
+<li>BelongsTo (one to one)</li>
+<li>HasOne (one to one)</li>
+<li>HasMany (one to many)</li>
+<li>BelongsToMany (many to many)</li>
+</ol>
+<blockquote>
+<p>在本文中不讨论 many to many 的类型, 其实该类型与 MySQL 中的呈现是一样的. 众所周知, 我们无法仅仅通过两个表格来呈现 many to many. 我们需要插入第三个表格如 table1_has_table2 来实现我们的关系. Sequelize 中的 BelongsToMany 也是一样, 需要通过额外的第三个表来时实现. (具体可看文档)</p>
+</blockquote>
+<p>文档中有一个重要的阅读前提条件, 就是要明白 Source Model 和 Target Model</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.hasOne(Project);</span><br></pre></td></tr></table></figure>
+
+<p>User model (the model that the function is being invoked on) is the <strong>source</strong>. Project model (the model being passed as an argument) is the <strong>target.</strong> 简单来说就是调用函数的是<strong>Source Model</strong>, 而作为函数参数的为<strong>Target Model</strong>.</p>
+<p><strong>BelongsTo 和 HasOne</strong></p>
+<p>两者均表示 One-To-One 的关系, 具体的区别是 Source Model 和 Target Model 的不同.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自动添加userRoleId到User表格中</span></span><br><span class="line">User.belongsTo(UserRole);</span><br><span class="line"><span class="comment">// Adds roleId to user rather than userRoleId</span></span><br><span class="line">User.belongsTo(UserRole, &#123; <span class="attr">as</span>: <span class="string">"role"</span> &#125;);</span><br><span class="line"><span class="comment">// Adds fk_companyname to User</span></span><br><span class="line"><span class="comment">// 如果我们想指定一个属性作为FK, 则可以使用targetKey;</span></span><br><span class="line">User.belongsTo(Company, &#123; <span class="attr">foreignKey</span>: <span class="string">"fk_companyname"</span>, <span class="attr">targetKey</span>: <span class="string">"name"</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一般而言, 我们都是使用一个表的PK作为另一个表FK</span></span><br><span class="line"><span class="comment">// 但是如果我们想使用一个表除以PK外的属性作为另一个表的FK</span></span><br><span class="line"><span class="comment">// 可以使用targetKey</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>hasMany</strong></p>
+<p><code>hasMany</code>就是常见的一对多的关系. 在这种关系中, 一般是”一”作为<code>source</code>, 而”多”作为<code>target</code>. 与前文一样, 我们在指定 association 的时候, 我们可以添加 options.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定一个FK名字</span></span><br><span class="line">User.hasMany(List, &#123; <span class="attr">foreignKey</span>: <span class="string">"accountId"</span> &#125;);</span><br><span class="line"><span class="comment">// 指定一个FK名字和对应的source表中的属性</span></span><br><span class="line">User.hasMany(List, &#123; <span class="attr">foreignKey</span>: <span class="string">"userId"</span>, <span class="attr">sourceKey</span>: <span class="string">"id"</span> &#125;);</span><br><span class="line"><span class="comment">// 在默认的情况下, onDelete: null</span></span><br><span class="line"><span class="comment">// 当我们需要删除"一", 而"多"自动消失, 我们需要设置为cascade</span></span><br><span class="line">User.hasMany(List, &#123; <span class="attr">onDelete</span>: <span class="string">"cascade"</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>当我们解决了表格之间的关系的之后, 我们需要关注原始 MySQL 中另外一大利器<code>join</code>. 这也是为什么关系型数据库需要有关系. 我们很多时候需要从一个表延伸到其他表的内容. 在传统的 MySQL 中, 我们会以下面的方式去进行表格的合并查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Orders.OrderID, Customers.CustomerName, Orders.OrderDate</span><br><span class="line"><span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> Customers <span class="keyword">ON</span> Orders.CustomerID=Customers.CustomerID;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推荐使用alias</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> o.OrderID, c.CustomerName, o.OrderDate</span><br><span class="line"><span class="keyword">FROM</span> Orders o</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> Customers c</span><br><span class="line"><span class="keyword">ON</span> o.CustomerID=c.CustomerID;</span><br></pre></td></tr></table></figure>
+
+<p>在 Sequelize 中要实现<code>join</code>需要用<code>include</code>关键字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">"./model/user"</span>);</span><br><span class="line"><span class="keyword">const</span> Blog = <span class="built_in">require</span>(<span class="string">"./model/blog"</span>);</span><br><span class="line">route.get(<span class="string">"/get"</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> result = <span class="keyword">await</span> Blog.findAll(&#123;</span><br><span class="line">		include: [</span><br><span class="line">			&#123;</span><br><span class="line">				model: User,</span><br><span class="line">				required: <span class="literal">true</span>, <span class="comment">// 这里表示inner join, 即有userId的blog才会显示</span></span><br><span class="line">				<span class="comment">// required: false, // 这里表示left join, 会显示全部blog</span></span><br><span class="line">			&#125;,</span><br><span class="line">		],</span><br><span class="line">	&#125;);</span><br><span class="line">	<span class="built_in">console</span>.log(result);</span><br><span class="line">	ctx.body = &#123;</span><br><span class="line">		result,</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 还可以增加条件</span></span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">"./model/user"</span>);</span><br><span class="line"><span class="keyword">const</span> Blog = <span class="built_in">require</span>(<span class="string">"./model/blog"</span>);</span><br><span class="line">route.get(<span class="string">"/get"</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> result = <span class="keyword">await</span> Blog.findAll(&#123;</span><br><span class="line">		include: [</span><br><span class="line">			&#123;</span><br><span class="line">				model: User,</span><br><span class="line">				where: &#123; <span class="attr">gender</span>: <span class="string">"female"</span> &#125;, <span class="comment">// 只要女性写的blog会显示出来</span></span><br><span class="line">				<span class="comment">// required: true, // 当出现where的关键字的时候, 默认是true</span></span><br><span class="line">			&#125;,</span><br><span class="line">		],</span><br><span class="line">	&#125;);</span><br><span class="line">	<span class="built_in">console</span>.log(result);</span><br><span class="line">	ctx.body = &#123;</span><br><span class="line">		result,</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h3><p>推荐查看<a href="https://sequelize.org/master/manual/migrations.html" target="_blank" rel="noopener">文档</a>, 不过其实文档也没有很多相关内容. 我自己稍微玩了一下, 其实发现这个 migration 的好处就是可以记录每一个 model 的结构, 除此之外并没有什么好处. 试想一下在开发阶段, 假设我们需要不断修改数据库的话, 我们会发现 migration 实现更新很麻烦, 每次都要去删除整个数据库. 然后去使用指令<code>npx sequelize-cli db:migrate</code>来建立映射关系. 还不如直接使用<code>db.sync({force:true})</code>.</p>
+<p>至于数据库的数据结构, 其实可以说重要, 可以说不重要. 我觉得表格中的内容比表格的属性结构更重要. 假设我们需要更改结构, 其实我们还是需要导出原来的数据, 然后再根据其属性去添加, 然后再导入新的表格中. 这时候我们已经做了所谓的数据结构的保存了.</p>
+<p>最后, 如果你还是想用这个指令. 你会发现你无法实现<code>join</code>这一个特性, 这时候我们需要改造我们<code>migration/XXXXXblog.js</code>的内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	up: <span class="keyword">async</span> (queryInterface, Sequelize) =&gt; &#123;</span><br><span class="line">		<span class="keyword">await</span> queryInterface.createTable(<span class="string">"blogs"</span>, &#123;</span><br><span class="line">			id: &#123;</span><br><span class="line">				allowNull: <span class="literal">false</span>,</span><br><span class="line">				autoIncrement: <span class="literal">true</span>,</span><br><span class="line">				primaryKey: <span class="literal">true</span>,</span><br><span class="line">				type: Sequelize.INTEGER,</span><br><span class="line">			&#125;,</span><br><span class="line">			author: &#123;</span><br><span class="line">				type: Sequelize.STRING,</span><br><span class="line">			&#125;,</span><br><span class="line">			name: &#123;</span><br><span class="line">				type: Sequelize.STRING,</span><br><span class="line">			&#125;,</span><br><span class="line">			userId: &#123;</span><br><span class="line">				type: Sequelize.INTEGER,</span><br><span class="line">				references: &#123;</span><br><span class="line">					model: <span class="string">"users"</span>, <span class="comment">// 这里使用数据库中的名字, 或者引入User模型也可以, 也可以</span></span><br><span class="line">					key: <span class="string">"id"</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">			&#125;,</span><br><span class="line">			createdAt: &#123;</span><br><span class="line">				allowNull: <span class="literal">false</span>,</span><br><span class="line">				type: Sequelize.DATE,</span><br><span class="line">			&#125;,</span><br><span class="line">			updatedAt: &#123;</span><br><span class="line">				allowNull: <span class="literal">false</span>,</span><br><span class="line">				type: Sequelize.DATE,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;,</span><br><span class="line">	down: <span class="keyword">async</span> (queryInterface, Sequelize) =&gt; &#123;</span><br><span class="line">		<span class="keyword">await</span> queryInterface.dropTable(<span class="string">"blogs"</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/myBlog.github.io/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+              <a href="/myBlog.github.io/tags/Node/" rel="tag"><i class="fa fa-tag"></i> Node</a>
+              <a href="/myBlog.github.io/tags/Koa/" rel="tag"><i class="fa fa-tag"></i> Koa</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog.github.io/2020/07/18/sass/" rel="prev" title="First glimpse on Sass">
+      <i class="fa fa-chevron-left"></i> First glimpse on Sass
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-关于服务端编程"><span class="nav-number">2.</span> <span class="nav-text">一&#x2F; 关于服务端编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-Koa"><span class="nav-number">3.</span> <span class="nav-text">二&#x2F; Koa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-静态资源"><span class="nav-number">4.</span> <span class="nav-text">三&#x2F; 静态资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-路由"><span class="nav-number">5.</span> <span class="nav-text">四&#x2F; 路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-请求方法"><span class="nav-number">6.</span> <span class="nav-text">五&#x2F; 请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-模板引擎"><span class="nav-number">7.</span> <span class="nav-text">六&#x2F; 模板引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七-Session-Cookies-与-JWT"><span class="nav-number">8.</span> <span class="nav-text">七&#x2F; Session, Cookies 与 JWT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JWT"><span class="nav-number">8.1.</span> <span class="nav-text">JWT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八-数据持久化"><span class="nav-number">9.</span> <span class="nav-text">八&#x2F; 数据持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequelize"><span class="nav-number">9.1.</span> <span class="nav-text">Sequelize</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建连接"><span class="nav-number">9.1.1.</span> <span class="nav-text">构建连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-Models"><span class="nav-number">9.1.2.</span> <span class="nav-text">创建 Models</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用-MySQL-本身建立表格"><span class="nav-number">9.1.2.1.</span> <span class="nav-text">利用 MySQL 本身建立表格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用-Sequelize-的同步功能建立表格"><span class="nav-number">9.1.2.2.</span> <span class="nav-text">利用 Sequelize 的同步功能建立表格</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Migration"><span class="nav-number">9.2.</span> <span class="nav-text">Migration</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FgSurewin"
+      src="/myBlog.github.io/images/center.jpg">
+  <p class="site-author-name" itemprop="name">FgSurewin</p>
+  <div class="site-description" itemprop="description">life is worthless</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myBlog.github.io/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/myBlog.github.io/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myBlog.github.io/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/FgSurewin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;FgSurewin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Mrliu3244794@gmail.com" title="E-Mail → mailto:Mrliu3244794@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="/myBlog.github.io/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FgSurewin</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myBlog.github.io/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.min.js"></script>
+  <script src="/myBlog.github.io/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myBlog.github.io/js/utils.js"></script>
+
+<script src="/myBlog.github.io/js/motion.js"></script>
+
+
+<script src="/myBlog.github.io/js/schemes/muse.js"></script>
+
+
+<script src="/myBlog.github.io/js/next-boot.js"></script>
+
+<script src="/myBlog.github.io/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/myBlog.github.io/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Iv3Szu1H8nfuR7V8SH54pjaV-9Nh9j0Va',
+      appKey     : 'OUexH0uEfuN5pTWoCAx8jdfK',
+      placeholder: "Make a comment",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'en' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.5/lib/darkmode-js.min.js"></script>
+		<script>
+			var options = {
+				bottom: '32px', // default: '32px'
+				right: '32px', // default: '32px'
+				left: 'unset', // default: 'unset'
+				time: '0.5s', // default: '0.3s'
+				mixColor: '#fff', // default: '#fff'
+				backgroundColor: '#fff', // default: '#fff'
+				buttonColorDark: '#100f2c', // default: '#100f2c'
+				buttonColorLight: '#fff', // default: '#fff'
+				saveInCookies: true, // default: true,
+				label: '🌓', // default: ''
+				autoMatchOsTheme: true, // default: true
+			};
+
+			const darkmode = new Darkmode(options);
+			darkmode.showWidget();
+		</script>
+		<style>
+button.darkmode-toggle {
+  z-index: 9999;
+}
+img, .darkmode-ignore {
+  isolation: isolate;
+  display: block;
+}
+</style>
+</body>
+</html>
