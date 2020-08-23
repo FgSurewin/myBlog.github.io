@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>First glimpse on MongoDB</title>
+    <url>/myBlog.github.io/2020/08/22/MongoDB/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgMongoDB.png" alt=""></p>
+<hr>
+<a id="more"></a>
+
+<h1 id="MongoDB-学习"><a href="#MongoDB-学习" class="headerlink" title="MongoDB 学习"></a>MongoDB 学习</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><table>
+<thead>
+<tr>
+<th align="center">MySQL</th>
+<th align="center">MongoDB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Schema</td>
+<td align="center">Schema</td>
+</tr>
+<tr>
+<td align="center">Table</td>
+<td align="center">Collection</td>
+</tr>
+<tr>
+<td align="center">Row</td>
+<td align="center">Document</td>
+</tr>
+<tr>
+<td align="center">Column</td>
+<td align="center">Field</td>
+</tr>
+</tbody></table>
+<h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查阅所有数据库</span><br><span class="line">$ show databases</span><br><span class="line"># 或者简写</span><br><span class="line">$ show dbs</span><br><span class="line"></span><br><span class="line"># 使用并移动到指定数据库</span><br><span class="line">$ use [name]</span><br><span class="line"># 如果数据库不存在则自动创建</span><br><span class="line"></span><br><span class="line"># 清除shell窗口</span><br><span class="line">$ ctrl + L</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库的创建与删除"><a href="#数据库的创建与删除" class="headerlink" title="数据库的创建与删除"></a>数据库的创建与删除</h2><p>正如前文所言, 可以通过<code>use</code>关键字进行数据库的创建.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 创建test数据库</span><br><span class="line">$ use test</span><br><span class="line">&gt; switched to db test</span><br><span class="line"></span><br><span class="line"># 查看当前数据库</span><br><span class="line">$ db</span><br><span class="line"></span><br><span class="line"># 删除数据库</span><br><span class="line">$ db.dropDatabase()</span><br><span class="line"></span><br><span class="line"># 具体过程是先选定需要删除的数据库</span><br><span class="line">$ use [database]</span><br><span class="line">$ db.dropDatabase()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Collection-的创建与删除"><a href="#Collection-的创建与删除" class="headerlink" title="Collection 的创建与删除"></a>Collection 的创建与删除</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 创建Collection</span><br><span class="line">$ db.createCollection(&#39;user&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 删除Collection</span><br><span class="line">$ db.collection.drop()</span><br><span class="line"></span><br><span class="line"># 例如删除test</span><br><span class="line">$ db.test.drop()</span><br></pre></td></tr></table></figure>
+
+<h2 id="MongoDB-的-CRUD"><a href="#MongoDB-的-CRUD" class="headerlink" title="MongoDB 的 CRUD"></a>MongoDB 的 CRUD</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 插入数据</span><br><span class="line">$ db.COLLECTION_NAME.insert(document)</span><br><span class="line">或</span><br><span class="line">$ db.COLLECTION_NAME.save(document)</span><br><span class="line"></span><br><span class="line"># 插入多组数据 &#x3D;&gt; 使用数组</span><br><span class="line">db.collection.insertMany([</span><br><span class="line">&#123;....&#125;,</span><br><span class="line">&#123;....&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><p>在 MongoDB 中, 使用对象作为<code>where</code>关键字能够更加快速, 更直观的去获取数据.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询所有数据</span><br><span class="line">$ db.[collection].find()</span><br><span class="line"></span><br><span class="line"># 以整洁的方式呈现</span><br><span class="line">$ db.[collection].find().pretty()</span><br><span class="line"></span><br><span class="line"># 查询单个数据</span><br><span class="line">$ db.[collection].findOne(&#123;...&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>MongoDB 的查询方式以链式的方式呈现. 在查询中, 我们可以使用<code>sort</code>, <code>limit</code>等关键字进行对数据的操作.</p>
+<blockquote>
+<p>在 MongoDB 中使用 sort() 方法对数据进行排序，sort() 方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式:</p>
+<ul>
+<li><strong>1 为升序排列</strong></li>
+<li><strong>-1 为降序排列。</strong></li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 排序</span><br><span class="line">$ db.[collection].find().sort(&#123;KEY:1&#125;)</span><br><span class="line"></span><br><span class="line"># 数量</span><br><span class="line">$ db.[collection].find().count()</span><br><span class="line"></span><br><span class="line"># 限制</span><br><span class="line">$ db.[collection].find().sort(&#123;KEY:1&#125;).limit(2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>MongoDB 中的更新数据的结构分为两个部分.</p>
+<ul>
+<li><query>部分</li>
+<li><updat>部分</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 样板数据(user)</span><br><span class="line">&#123;</span><br><span class="line">	&quot;_id&quot; : ObjectId(&quot;5f3efcba4fab70cfd10b345d&quot;),</span><br><span class="line">	&quot;name&quot; : &quot;John Doe&quot;,</span><br><span class="line">	&quot;age&quot; : 28                                                         &#125;</span><br><span class="line"></span><br><span class="line"># 全部更新</span><br><span class="line">$ db.user.update(&#123;name : &quot;John Doe&quot;&#125;, &#123;age : 30&#125;);</span><br><span class="line"># 结果为</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5f3efcba4fab70cfd10b345d&quot;), &quot;age&quot; : 30 &#125;</span><br><span class="line"></span><br><span class="line"># 局部更新</span><br><span class="line">$ db.user.update(&#123;name : &quot;John Doe&quot;&#125;, &#123;$set : &#123;age : 30&#125;&#125;);</span><br><span class="line"># 结果为</span><br><span class="line">&#123;</span><br><span class="line">	&quot;_id&quot; : ObjectId(&quot;5f3efcba4fab70cfd10b345d&quot;),</span><br><span class="line">	&quot;name&quot; : &quot;John Doe&quot;,</span><br><span class="line">	&quot;age&quot; : 30                                                         &#125;</span><br><span class="line"></span><br><span class="line"># 替换更新</span><br><span class="line">$ db.user.save(&#123;...&#125;)</span><br><span class="line"># 原理与插入数据一样</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是要时刻注意使用<code>$set</code>操作符. 如果数据不存在则会自行创建.</p>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><p>数据的删除与查询几乎一致, 不同的是使用不同的关键字</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 删除单个数据</span><br><span class="line">$ db.user.deleteOne(&#123;_id:ObjectId(&quot;5f3efcba4fab70cfd10b345d&quot;)&#125;)</span><br><span class="line"></span><br><span class="line"># 删除多个数据</span><br><span class="line">$ db.inventory.deleteMany(</span><br><span class="line">    &#123; &quot;status&quot; : &quot;A&quot; &#125; &#x2F;&#x2F; specifies the documents to delete</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 清空Collection</span><br><span class="line">$ db.user.deleteMany(&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用操作符"><a href="#常用操作符" class="headerlink" title="常用操作符"></a>常用操作符</h3><table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$gt</td>
+<td align="center">&gt;</td>
+</tr>
+<tr>
+<td align="center">$lt</td>
+<td align="center">&lt;</td>
+</tr>
+<tr>
+<td align="center">$gte</td>
+<td align="center">=&gt;</td>
+</tr>
+<tr>
+<td align="center">$lte</td>
+<td align="center">&lt;=</td>
+</tr>
+<tr>
+<td align="center">$ne</td>
+<td align="center">!=</td>
+</tr>
+<tr>
+<td align="center">$eq</td>
+<td align="center">=</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 小于</span><br><span class="line">$ db.col.find(&#123;likes : &#123;$lt : 150&#125;&#125;)</span><br><span class="line"></span><br><span class="line"># 或者语句</span><br><span class="line">$ db.col.find(&#123; $or: [&#123;key1: value1&#125;, &#123;key2:value2&#125;] &#125;).pretty()</span><br></pre></td></tr></table></figure>
+
+<p>唯一需要的记忆技巧是每一个操作符都是<code>key-value</code>的方式呈现</p>
+<h1 id="Mongoose"><a href="#Mongoose" class="headerlink" title="Mongoose"></a>Mongoose</h1><blockquote>
+<p>ORM 是服务端与数据库之间进行沟通的最好桥梁</p>
+</blockquote>
+<h2 id="连接方式"><a href="#连接方式" class="headerlink" title="连接方式"></a>连接方式</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mongo.connect(</span><br><span class="line">	<span class="string">"mongodb://localhost/demo"</span>,</span><br><span class="line">	<span class="comment">// 这两个参数能阻止警告</span></span><br><span class="line">	&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span>, <span class="attr">useUnifiedTopology</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">	() =&gt; &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"Database has been connected!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是, 执行<code>connect</code>方法后实际返回的是一个<code>promise</code>, 即异步. 如果你想确保数据库连接成功再进行<code>app.listen</code>. 应该使用<code>async / await</code>来保证程序执行顺序.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> appInit = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">	<span class="keyword">await</span> mongo.connect(</span><br><span class="line">		<span class="string">"mongodb://localhost/demo"</span>,</span><br><span class="line">		<span class="comment">// 这两个参数能阻止警告</span></span><br><span class="line">		&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span>, <span class="attr">useUnifiedTopology</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">		() =&gt; &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">"Database has been connected!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	);</span><br><span class="line">	app.listen(<span class="number">3000</span>);</span><br><span class="line">&#125;;</span><br><span class="line">appInit();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Atlas"><a href="#Atlas" class="headerlink" title="Atlas"></a>Atlas</h3><p>强烈推荐使用 Atlas. 连接方式非常简单.</p>
+<ul>
+<li>设置 user</li>
+<li>设置 IP</li>
+</ul>
+<h2 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h2><p>基本的 API 与原生 MongoDB 几乎一致, 注意以下几点即可:</p>
+<ul>
+<li>API 都是 Promise, 可以选择使用回调函数或者使用<code>await</code></li>
+<li><code>update</code>不需要使用<code>$set</code>关键字也能进行更新</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// service</span></span><br><span class="line"><span class="keyword">const</span> addConsumer = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> newConsumer = <span class="keyword">new</span> Consumer(data);</span><br><span class="line">	<span class="keyword">return</span> newConsumer.save();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getAllConsumers = <span class="function"><span class="params">()</span> =&gt;</span> Consumer.find();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getConsumer = <span class="function">(<span class="params">id</span>) =&gt;</span> Consumer.findOne(&#123; <span class="attr">_id</span>: id &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> updateConsumer = <span class="function">(<span class="params">id, data</span>) =&gt;</span> Consumer.updateOne(&#123; <span class="attr">_id</span>: id &#125;, data);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> deleteConsumer = <span class="function">(<span class="params">id</span>) =&gt;</span> Consumer.deleteOne(&#123; <span class="attr">_id</span>: id &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// controller</span></span><br><span class="line">add: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">		<span class="keyword">const</span> data = req.body;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">const</span> result = <span class="keyword">await</span> addConsumer(data);</span><br><span class="line">			res.json(result);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			res.send(&#123;</span><br><span class="line">				error: <span class="literal">true</span>,</span><br><span class="line">				message: err.message,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	findAll: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">const</span> result = <span class="keyword">await</span> getAllConsumers();</span><br><span class="line">			res.json(result);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			res.send(&#123;</span><br><span class="line">				error: <span class="literal">true</span>,</span><br><span class="line">				message: err.message,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	findOne: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">		<span class="keyword">const</span> id = req.params.id;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">const</span> result = <span class="keyword">await</span> getConsumer(id);</span><br><span class="line">			res.json(result);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			res.send(&#123;</span><br><span class="line">				error: <span class="literal">true</span>,</span><br><span class="line">				message: err.message,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	update: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">		<span class="keyword">const</span> id = req.params.id;</span><br><span class="line">		<span class="keyword">const</span> data = req.body;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">const</span> result = <span class="keyword">await</span> updateConsumer(id, data);</span><br><span class="line">			res.json(result);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			res.send(&#123;</span><br><span class="line">				error: <span class="literal">true</span>,</span><br><span class="line">				message: err.message,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	deleteOne: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">		<span class="keyword">const</span> id = req.params.id;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">const</span> result = <span class="keyword">await</span> deleteConsumer(id);</span><br><span class="line">			res.json(result);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">			res.send(&#123;</span><br><span class="line">				error: <span class="literal">true</span>,</span><br><span class="line">				message: err.message,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>能使用 params 是因为路由使用了动态路由</p>
+</blockquote>
+<h1 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h1><p>补充知识部分是对<code>RouteBuilder</code>进行个别知识点的补充(<a href="https://github.com/FgSurewin/myTempalte/blob/master/MongoDB/v2/utils/routeBuilder.js" target="_blank" rel="noopener">源码地址</a>). 在编写简易 CRUD 的模板的时候, 采用传统<code>MVC</code>模型的文件结构方法. 即:</p>
+<ul>
+<li><code>controller</code>负责整体调节的功能</li>
+<li><code>service</code>负责调动其<code>model</code></li>
+<li><code>model</code>则是负责关联 Databse</li>
+</ul>
+<p>在这种目录格式下管理代码, 优点是逻辑清晰, 可维护性高. 缺点是很多臃肿, 重复的代码. 从传统 RestFul API 的角度来看, <code>routes</code>文件完全可以自行生成. 我们只需要关注对应的<code>controller</code>即可.</p>
+<p>整个设计思路是通过<code>controller</code>的配合来实现的. 利用其对象声明其关系.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ./controllers/order.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = [</span><br><span class="line">	&#123;</span><br><span class="line">		method: <span class="string">"post"</span>,</span><br><span class="line">		path: <span class="string">"/add"</span>,</span><br><span class="line">		middleware: <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">			<span class="keyword">const</span> data = req.body;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">const</span> result = <span class="keyword">await</span> addOrder(data);</span><br><span class="line">				res.json(result);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">				res.send(&#123;</span><br><span class="line">					error: <span class="literal">true</span>,</span><br><span class="line">					message: err.message,</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">    ........</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="this-的理解"><a href="#this-的理解" class="headerlink" title="this 的理解"></a>this 的理解</h2><ul>
+<li>this 的默认指向是 window(Node 环境下是 global)</li>
+<li>普通内嵌函数会丢失 this(因为词性环境已经不同)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 普通内嵌函数指的是会触发的函数</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">	arr: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">	show(item) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(item);</span><br><span class="line">	&#125;,</span><br><span class="line">	pushItem() &#123;</span><br><span class="line">		<span class="keyword">this</span>.arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">			<span class="comment">// 在forEach中的内部函数会丢失this</span></span><br><span class="line">			<span class="comment">// 应该改成箭头函数</span></span><br><span class="line">			<span class="keyword">this</span>.show(item);</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line">obj.pushItem();</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是<code>for</code>循环并不是函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> arr) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这里与forEach不同, 这里并不是函数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Express-中的-next"><a href="#Express-中的-next" class="headerlink" title="Express 中的 next"></a>Express 中的 next</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 想不到req中还有一个next方法</span><br><span class="line">req.next() &#x3D; next()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Node</tag>
+        <tag>MongoDB</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Express Crash Course</title>
     <url>/myBlog.github.io/2020/08/21/express/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img20200821153915.png" alt=""></p>
