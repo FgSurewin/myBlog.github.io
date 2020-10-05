@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>配置一台前端开发的MacBook</title>
+    <url>/myBlog.github.io/2020/10/04/MacBook/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgpexels-startup-stock-photos-7101.jpg" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于上一台的笔记本已经老弱病残的缘故, 借此机会更换一台 MacBook. 这也是我的第一台 MacBook, 所以我写下这篇笔记作为一套预设方案.</p>
+<a id="more"></a>
+
+<h2 id="本机基础设置"><a href="#本机基础设置" class="headerlink" title="本机基础设置"></a>本机基础设置</h2><p>设置清单如下:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 触控板添加tap功能(轻点代替按压)</span></span><br><span class="line">System Preference -&gt; Trackpad -&gt; Point &amp; Click -&gt; Tap to click</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加三指拖拉</span></span><br><span class="line">System Preference -&gt; Accessibility -&gt; Pointer Control -&gt; Trackpad Options -&gt; <span class="built_in">enable</span> dragging</span><br><span class="line"></span><br><span class="line"><span class="comment"># Finder显示地址栏和程序后缀</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="执行清单"><a href="#执行清单" class="headerlink" title="执行清单"></a>执行清单</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装apple开发环境的command line tool</span></span><br><span class="line">$ xcode-select --install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装HomeBrew (在官网中下载)</span></span><br><span class="line"><span class="comment"># 安装iterm2</span></span><br><span class="line">$ brew cask install iterm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装git</span></span><br><span class="line">$ brew install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装nvm (下文有安装方法)</span></span><br><span class="line"><span class="comment"># 通过nvm来安装node</span></span><br><span class="line">$ nvm install --lts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他的应用程序可以通过HomeBrew来安装</span></span><br><span class="line"><span class="comment"># VScode和docker也可以通过官网安装</span></span><br></pre></td></tr></table></figure>
+
+<p>以上的程序完成之后, 我们还需要在自己<code>GitHub</code>的账号中添加<code>ssh key</code>. 具体步骤可自行到<code>GitHub</code>中学习.</p>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="HomeBrew的使用"><a href="#HomeBrew的使用" class="headerlink" title="HomeBrew的使用"></a><code>HomeBrew</code>的使用</h3><p>作为<code>Unix</code>的衍生品, MacBook 中应该也需要拥有通过命令行来安装程序的能力. 但事实上, 原生的 MacBook 是不支持的. 而<code>HomeBrew</code>则是作为这一块缺失的拼图一样的存在.</p>
+<p>指令清单如下:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装HomeBrew</span></span><br><span class="line">$ /bin/bash -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装非APP Store软件</span></span><br><span class="line">$ brew install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装APP Store软件</span></span><br><span class="line">$ brew cask install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载软件</span></span><br><span class="line">$ brew uninstall [name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定软件</span></span><br><span class="line">$ brew upgrade [name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有软件</span></span><br><span class="line">$ brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看哪些软件需要更新</span></span><br><span class="line">$ brew outdated</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索软件</span></span><br><span class="line">$ brew search [name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看相关信息</span></span><br><span class="line">$ brew cask info [name]</span><br><span class="line">$ brew cask info wechat</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://brew.sh/" target="_blank" rel="noopener">HomeBrew 主页</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/100395919" target="_blank" rel="noopener">HomeBrew 的玩法</a></p>
+<h3 id="iterm2的使用"><a href="#iterm2的使用" class="headerlink" title="iterm2的使用"></a><code>iterm2</code>的使用</h3><h4 id="为什么使用zsh"><a href="#为什么使用zsh" class="headerlink" title="为什么使用zsh"></a>为什么使用<code>zsh</code></h4><p>从我的<code>terminal</code>来看, MacBook 已经将<code>zsh</code>设置成默认. 所以我不需要去额外下载. 其实对于我而言, 我也开始喜欢用<code>zsh</code>而不是<code>bash</code>了. 因为这个<code>TAB</code>键太好用了.</p>
+<p>具体可以参考该文章<a href="https://www.zhihu.com/question/29977255" target="_blank" rel="noopener">使用<code>zsh</code>的优点</a></p>
+<h4 id="使用oh-my-zsh来美化你的iterm2"><a href="#使用oh-my-zsh来美化你的iterm2" class="headerlink" title="使用oh_my_zsh来美化你的iterm2"></a>使用<code>oh_my_zsh</code>来美化你的<code>iterm2</code></h4><p><code>oh_my_zsh</code>是一个集成的<code>zsh</code>配置框架, 基本配置中已经提供了不同的主题供给选择. 如果你仍然不喜欢, 可以像我一样使用类似<code>p10k</code>或者<code>p9k</code>等主题.</p>
+<p>安装的过程也是非常容易, 首先需要到官网安装<a href="https://ohmyz.sh/#install" target="_blank" rel="noopener"><code>oh_my_zsh</code></a>.或者运行以下指令</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>之后便可以按照下面的参考资料自行安装对应的主题.</p>
+<blockquote>
+<p>温馨提醒:</p>
+<p><strong>代码高亮</strong>和<strong>输入提醒</strong>真的太好用了, 强烈推荐 👍</p>
+</blockquote>
+<h4 id="参考资料-1"><a href="#参考资料-1" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://gist.github.com/kevin-smets/8568070" target="_blank" rel="noopener"><code>iterm2 + oh_my_zsh + p10k</code></a></p>
+<p><a href="https://github.com/pugengineer/iTerm2-ohmyzsh-powerlevel9k" target="_blank" rel="noopener"><code>iTerm2 + oh my zsh + Powerlevel9K</code></a></p>
+<h3 id="spectacle分屏工具"><a href="#spectacle分屏工具" class="headerlink" title="spectacle分屏工具"></a><code>spectacle</code>分屏工具</h3><p><code>spectacle</code>是一个用于快速分屏的软件, 其实我还是喜欢 Windows 下的分屏操作.</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 常用的指令</span></span><br><span class="line">全屏 -- ⌥⌘F</span><br><span class="line">上下左右 -- ⌥⌘(箭头上下左右)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用的三分之二或者一半也是通过上面上下左右的快捷键来实现</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Alfred-不一样的SpotLight"><a href="#Alfred-不一样的SpotLight" class="headerlink" title="Alfred- 不一样的SpotLight"></a><code>Alfred</code>- 不一样的<code>SpotLight</code></h3><p>对于这个软件, 我非常喜欢它的<code>workflow</code>的功能. 奈何付费且太贵了, 只能暂时用着默认功能.</p>
+<p>但是普通功能也很不错了. 使用快捷键<code>⌥space</code>来调出.</p>
+<h3 id="nvm的使用"><a href="#nvm的使用" class="headerlink" title="nvm的使用"></a><code>nvm</code>的使用</h3><blockquote>
+<p>nvm is a version manager for <a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js</a>, designed to be installed per-user, and invoked per-shell. <code>nvm</code> works on any POSIX-compliant shell (sh, dash, ksh, zsh, bash), in particular on these platforms: unix, macOS, and windows WSL</p>
+<p><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">GitHub 地址</a></p>
+</blockquote>
+<p>使用<code>nvm</code>的好处如下:</p>
+<ul>
+<li>方便管理<code>node</code>的版本</li>
+<li>还能管理不同版本下的<code>global package</code></li>
+</ul>
+<p>常用命令如下:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装LTS版本的Node  --&gt; Long Term Support</span></span><br><span class="line">$ nvm install --lts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定的版本</span></span><br><span class="line">$ nvm install 8.10  --&gt; 只需要指定版本号即可</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新的版本</span></span><br><span class="line">$ nvm install node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有Node</span></span><br><span class="line">$ nvm ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择使用指定Node</span></span><br><span class="line">$ nvm use 12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前的Node版本</span></span><br><span class="line">$ node -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定特定版本成为默认Node</span></span><br><span class="line">$ nvm <span class="built_in">alias</span> default 13.5.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不同版本的Node, 他们会有自己独有全局模块</span></span><br><span class="line"><span class="comment"># 比如13.5版本的Node有全局的A模块</span></span><br><span class="line"><span class="comment"># 那么你切换到12.0版本的时候就需要自行下载全局A模块了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前Node的全局模块</span></span><br><span class="line">$ npm ls -g --depth=0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为当前版本的Node安装指定版本的Node的所有全局模块</span></span><br><span class="line">$ nvm install node --reinstall-packages-from=12.14.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考资料-2"><a href="#参考资料-2" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://heynode.com/tutorial/install-nodejs-locally-nvm" target="_blank" rel="noopener">hey(node)</a></p>
+<h2 id="突发问题"><a href="#突发问题" class="headerlink" title="突发问题"></a>突发问题</h2><ol>
+<li><code>Xcode command tool</code>安装失败</li>
+</ol>
+<blockquote>
+<p>Can’t install the software because it is not currently available from the Software Update server.</p>
+<p>这是笔者遇到的第三个问题, 前面两个分别是要求我插入电源, 还有更新当前系统. 当我更新完之后便出现这个问题.</p>
+<p>如果你是新入手 MacBook 的, 我想你也是和我一样不明白为什么要安装这个 Xcode. 你可以大致理解成是一个苹果提供给开发者的开发工具包.</p>
+<p>像一些指令的问题, 比如日后我们需要使用<code>HomeBrew</code>或者<code>npm</code>的时候, 他会要求你的电脑处于合适的环境.</p>
+</blockquote>
+<p>经过网上的冲浪, 发现解决的方法的很多种.</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第一种方法是自己手动去官网上下载合适你当前系统版本的Xcode</span></span><br><span class="line"><span class="comment"># 点击如下网页 --&gt; 需要login验证</span></span><br><span class="line"><span class="comment"># https://developer.apple.com/download/more/</span></span><br><span class="line"><span class="comment"># 在左边的搜索框种搜索Command Line Tools</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二种方法 (本人就是使用这种方法)</span></span><br><span class="line">$ sudo xcode-select --reset</span><br><span class="line"><span class="comment"># sudo输入时会要求输入密码</span></span><br><span class="line"><span class="comment"># 该方法如指令所说, 让系统重设xcode, 然后系统会自行下载合适版本</span></span><br><span class="line"><span class="comment"># 你只要在跳出的窗口按下确定即可</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装<code>oh_my_zsh</code>的时候出现冲突问题</li>
+</ol>
+<blockquote>
+<p>Insecure completion-dependent directories detected:</p>
+</blockquote>
+<p>事实上, 从提供的信息中我们已经看到两种官方提供的方法.</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 确保当前使用账号就是电脑的真正使用者, 运行一下指令</span></span><br><span class="line">$ compaudit | xargs chmod g-w, o-w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果上述方法无法解决问题, 那么可以试图关闭oh_my_zsh的检测功能</span></span><br><span class="line"><span class="comment"># 需要修改[~/.zshrc]文件</span></span><br><span class="line"></span><br><span class="line">ZSH_DISABLE_COMPFIX=<span class="string">"true"</span></span><br><span class="line">放在</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$ZSH</span>/oh-my-zsh.sh</span><br><span class="line">之前</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/img20201004223356.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>programming</category>
+      </categories>
+      <tags>
+        <tag>Daily</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>First glimpse on MongoDB</title>
     <url>/myBlog.github.io/2020/08/22/MongoDB/</url>
     <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/FgSurewin/pictures/imgMongoDB.png" alt=""></p>
